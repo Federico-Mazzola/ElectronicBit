@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import ProductList from "./components/ProductList";
+import Cart from "./components/Cart";
 
 export default function App() {
-  // 🧠 Estado global del carrito
-  const [cartCount, setCartCount] = useState(0);
+  const [cartItems, setCartItems] = useState([]); // guarda los productos
 
-  const handleAddToCart = () => {
-    setCartCount(cartCount + 1);
+  const handleAddToCart = (product) => {
+    setCartItems([...cartItems, product]);
   };
 
   const appStyle = {
@@ -31,10 +31,11 @@ export default function App() {
     <div style={appStyle}>
       <header style={headerStyle}>
         <h1>ElectronicBit</h1>
-        <p>🛒 Carrito: {cartCount}</p>
+        <p>🛒 Carrito: {cartItems.length}</p>
       </header>
 
       <ProductList onAddToCart={handleAddToCart} />
+      <Cart items={cartItems} />
     </div>
   );
 }

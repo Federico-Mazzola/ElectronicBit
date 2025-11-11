@@ -41,10 +41,11 @@ export default function ProductList({ onAddToCart }) {
                     <ProductCard
                         key={prod.id}
                         {...prod}
-                        onAdd={onAddToCart}
+                        onAdd={() => onAddToCart(prod)} // 👈 ahora le pasa el producto
                     />
                 ))}
             </div>
         </div>
     );
 }
+
