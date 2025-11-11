@@ -1,24 +1,19 @@
 import React from "react";
+import ProductList from "./components/ProductList";
 
 export default function App() {
-  const containerStyle = {
+  const appStyle = {
     fontFamily: "Arial, sans-serif",
-    textAlign: "center",
-    padding: "2rem",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#f9f9f9",
     minHeight: "100vh",
-  };
-
-  const titleStyle = {
-    color: "#333",
-    fontSize: "2rem",
-    marginBottom: "1rem",
+    margin: 0,
+    padding: "2rem"
   };
 
   return (
-    <div style={containerStyle}>
-      <h1 style={titleStyle}>ElectronicBit</h1>
-      <p>ElectronicBit — Coderhouse 💻</p>
+    <div style={appStyle}>
+      <h1 style={{ textAlign: "center", color: "#333" }}>ElectronicBit</h1>
+      <ProductList />
     </div>
   );
 }
