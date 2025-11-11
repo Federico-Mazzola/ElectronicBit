@@ -21,23 +21,24 @@ export default function App() {
 
   // ➕ Agregar producto (manteniendo cantidades)
   const handleAddToCart = (product) => {
-    setCartItems((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
+  setCartItems((prev) => {
+    const existing = prev.find((item) => item.name === product.name);
 
-      if (existing) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        return [...prev, { ...product, quantity: 1 }];
-      }
-    });
+    if (existing) {
+      // Si ya existe, sumamos la cantidad
+      return prev.map((item) =>
+        item.name === product.name
+          ? { ...item, quantity: item.quantity + product.quantity }
+          : item
+      );
+    } else {
+      return [...prev, product];
+    }
+  });
 
-    setSuccessMessage(`${product.name} agregado al carrito ✅`);
-    setTimeout(() => setSuccessMessage(""), 2000);
-  };
+  setSuccessMessage(`${product.name} agregado al carrito ✅`);
+  setTimeout(() => setSuccessMessage(""), 2000);
+};
 
   // ❌ Eliminar producto
   const handleRemoveFromCart = (id) => {

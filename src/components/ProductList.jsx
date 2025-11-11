@@ -1,4 +1,3 @@
-// src/components/ProductList.jsx
 import React from "react";
 import ProductCard from "./ProductCard";
 
@@ -9,22 +8,22 @@ export default function ProductList({ onAddToCart }) {
             name: "Auriculares Bluetooth",
             price: 15999,
             description: "Auriculares inalámbricos con micrófono y cancelación de ruido.",
-            image: "https://via.placeholder.com/200x150?text=Auriculares"
+            image: "https://via.placeholder.com/200x150?text=Auriculares",
         },
         {
             id: 2,
             name: "Teclado Mecánico RGB",
             price: 22999,
             description: "Teclado gamer con retroiluminación y switches azules.",
-            image: "https://via.placeholder.com/200x150?text=Teclado"
+            image: "https://via.placeholder.com/200x150?text=Teclado",
         },
         {
             id: 3,
             name: "Mouse Inalámbrico",
             price: 8999,
             description: "Mouse ergonómico con sensor óptico y 5 botones programables.",
-            image: "https://via.placeholder.com/200x150?text=Mouse"
-        }
+            image: "https://via.placeholder.com/200x150?text=Mouse",
+        },
     ];
 
     const listStyle = {
@@ -39,12 +38,7 @@ export default function ProductList({ onAddToCart }) {
             <h2 style={{ textAlign: "center" }}>Nuestros Productos</h2>
             <div style={listStyle}>
                 {products.map((prod) => (
-                    // pasamos los campos del producto original; ProductCard crea su propia instancia con id si lo necesita
-                    <ProductCard
-                        key={prod.id}
-                        {...prod}
-                        onAdd={() => onAddToCart(prod)}
-                    />
+                    <ProductCard key={prod.id} {...prod} onAddToCart={onAddToCart} />
                 ))}
             </div>
         </div>
