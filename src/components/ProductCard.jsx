@@ -1,57 +1,60 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 export default function ProductCard({ id, name, price, description, image, onAddToCart }) {
-    const [count, setCount] = useState(1);
-
-    const handleIncrease = () => setCount(count + 1);
-    const handleDecrease = () => {
-        if (count > 1) setCount(count - 1);
-    };
-
-    const handleAdd = () => {
-        onAddToCart({ id, name, price, description, image, quantity: count });
-        setCount(1);
-    };
-
     const cardStyle = {
-        border: "1px solid #ccc",
+        border: "1px solid #ddd",
         borderRadius: "10px",
         padding: "1rem",
+        margin: "1rem",
         width: "220px",
-        margin: "10px",
         textAlign: "center",
-        boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
         backgroundColor: "#fff",
+        boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.1)",
     };
 
-    const btnStyle = {
+    const imgStyle = {
+        width: "100%",
+        borderRadius: "8px",
+    };
+
+    const buttonStyle = {
         backgroundColor: "#007bff",
         color: "#fff",
         border: "none",
-        borderRadius: "6px",
-        padding: "0.5rem 0.8rem",
+        padding: "0.5rem 1rem",
+        borderRadius: "5px",
         cursor: "pointer",
         marginTop: "0.5rem",
     };
 
+    const linkStyle = {
+        display: "inline-block",
+        marginTop: "0.5rem",
+        color: "#007bff",
+        textDecoration: "none",
+        fontWeight: "bold",
+    };
+
     return (
         <div style={cardStyle}>
-            <img src={image} alt={name} style={{ width: "100%", borderRadius: "8px" }} />
+            <img src={image} alt={name} style={imgStyle} />
             <h3>{name}</h3>
             <p>{description}</p>
-            <p style={{ color: "#2b7a0b", fontWeight: "bold" }}>${price}</p>
+            <p><strong>${price}</strong></p>
 
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px" }}>
-                <button onClick={handleDecrease}>−</button>
-                <span>{count}</span>
-                <button onClick={handleIncrease}>+</button>
-            </div>
+            {/* Botón para agregar al carrito */}
+            <button
+                style={buttonStyle}
+                onClick={() => onAddToCart({ id, name, price, quantity: 1 })}
+            >
+                Agregar al carrito
+            </button>
 
-            <button style={btnStyle} onClick={handleAdd}>Agregar al carrito</button>
+            {/* Enlace al detalle del producto */}
             <br />
-            <Link to={`/product/${id}`} style={{ textDecoration: "none" }}>
-                <button style={{ ...btnStyle, backgroundColor: "#555" }}>Ver Detalle</button>
+            <Link to={`/product/${id}`} style={linkStyle}>
+                Ver detalle
             </Link>
         </div>
     );

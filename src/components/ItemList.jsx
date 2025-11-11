@@ -21,6 +21,7 @@ export default function ItemList({ products, onAddToCart }) {
                 {products.map((prod) => (
                     <ProductCard
                         key={prod.id}
+                        id={prod.id}
                         name={prod.name}
                         price={prod.price}
                         description={prod.description}
@@ -32,3 +33,4 @@ export default function ItemList({ products, onAddToCart }) {
         </div>
     );
 }
+
