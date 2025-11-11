@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductList from "./components/ProductList";
 import Cart from "./components/Cart";
 
@@ -6,33 +6,45 @@ export default function App() {
   const [cartItems, setCartItems] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
 
+  // 🧩 1. Cargar carrito desde localStorage al iniciar
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }
+  }, []);
+
+  // 💾 2. Guardar carrito cada vez que cambie
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  // ➕ Agregar producto (manteniendo cantidades)
   const handleAddToCart = (product) => {
     setCartItems((prev) => {
-      // Buscar si el producto ya está en el carrito
       const existing = prev.find((item) => item.id === product.id);
 
       if (existing) {
-        // Si ya existe, aumentar cantidad
         return prev.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        // Si no existe, agregarlo con quantity = 1
         return [...prev, { ...product, quantity: 1 }];
       }
     });
 
-    // Mostrar mensaje temporal
     setSuccessMessage(`${product.name} agregado al carrito ✅`);
     setTimeout(() => setSuccessMessage(""), 2000);
   };
 
+  // ❌ Eliminar producto
   const handleRemoveFromCart = (id) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
+  // 🎨 Estilos
   const appStyle = {
     fontFamily: "Arial, sans-serif",
     backgroundColor: "#f9f9f9",
