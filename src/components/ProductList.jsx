@@ -1,3 +1,4 @@
+// src/components/ProductList.jsx
 import React from "react";
 import ProductCard from "./ProductCard";
 
@@ -38,14 +39,14 @@ export default function ProductList({ onAddToCart }) {
             <h2 style={{ textAlign: "center" }}>Nuestros Productos</h2>
             <div style={listStyle}>
                 {products.map((prod) => (
+                    // pasamos los campos del producto original; ProductCard crea su propia instancia con id si lo necesita
                     <ProductCard
                         key={prod.id}
                         {...prod}
-                        onAdd={() => onAddToCart(prod)} // 👈 ahora le pasa el producto
+                        onAdd={() => onAddToCart(prod)}
                     />
                 ))}
             </div>
         </div>
     );
 }
-

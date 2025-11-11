@@ -1,12 +1,26 @@
+// src/App.jsx
 import React, { useState } from "react";
 import ProductList from "./components/ProductList";
 import Cart from "./components/Cart";
 
 export default function App() {
-  const [cartItems, setCartItems] = useState([]); // guarda los productos
+  const [cartItems, setCartItems] = useState([]);
+  const [successMessage, setSuccessMessage] = useState(""); // mensaje temporal
 
+  // Agrega producto (si ya existe por id de catálogo, lo permite; si querés evitar duplicados, deberías comprobar...)
   const handleAddToCart = (product) => {
-    setCartItems([...cartItems, product]);
+    // crear copia con id único para cada instancia agregada (si el product.id es único por catálogo, podrías usarlo)
+    const item = { ...product, id: Date.now() + Math.floor(Math.random() * 1000) };
+    setCartItems(prev => [...prev, item]);
+
+    // Mensaje de éxito temporal (2s)
+    setSuccessMessage(`${product.name} agregado al carrito ✅`);
+    setTimeout(() => setSuccessMessage(""), 2000);
+  };
+
+  // Eliminar por id único
+  const handleRemoveFromCart = (id) => {
+    setCartItems(prev => prev.filter(item => item.id !== id));
   };
 
   const appStyle = {
@@ -24,7 +38,19 @@ export default function App() {
     padding: "1rem",
     backgroundColor: "#222",
     color: "#fff",
-    borderRadius: "10px"
+    borderRadius: "10px",
+    marginBottom: "1rem"
+  };
+
+  const successStyle = {
+    maxWidth: "600px",
+    margin: "0.75rem auto",
+    padding: "0.6rem 1rem",
+    backgroundColor: "#e6ffed",
+    color: "#1f7a2a",
+    border: "1px solid #c7f0d0",
+    borderRadius: "8px",
+    textAlign: "center",
   };
 
   return (
@@ -34,8 +60,11 @@ export default function App() {
         <p>🛒 Carrito: {cartItems.length}</p>
       </header>
 
+      {/* Mensaje de éxito temporal */}
+      {successMessage && <div style={successStyle}>{successMessage}</div>}
+
       <ProductList onAddToCart={handleAddToCart} />
-      <Cart items={cartItems} />
+      <Cart items={cartItems} onRemove={handleRemoveFromCart} />
     </div>
   );
 }

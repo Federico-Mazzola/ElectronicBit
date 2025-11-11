@@ -1,3 +1,4 @@
+// src/components/ProductCard.jsx
 import React from "react";
 
 export default function ProductCard({ name, price, description, image, onAdd }) {
@@ -26,19 +27,16 @@ export default function ProductCard({ name, price, description, image, onAdd }) 
         marginTop: "0.5rem"
     };
 
-    const handleAdd = () => {
-        onAdd(); // ejecuta la función enviada desde el padre
-    };
-
     return (
         <div style={cardStyle}>
             <img src={image} alt={name} style={imgStyle} />
             <h3 style={titleStyle}>{name}</h3>
             <p>{description}</p>
             <p style={priceStyle}>${price}</p>
-            <button style={buttonStyle} onClick={handleAdd}>
+            <button style={buttonStyle} onClick={() => onAdd({ id: Date.now(), name, price, description, image })}>
                 Agregar al carrito
             </button>
         </div>
     );
 }
+
