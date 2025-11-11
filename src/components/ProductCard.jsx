@@ -1,7 +1,6 @@
 import React from "react";
 
-export default function ProductCard({ name, price, description, image }) {
-    // 🎨 Estilos integrados (inline)
+export default function ProductCard({ name, price, description, image, onAdd }) {
     const cardStyle = {
         border: "1px solid #ccc",
         borderRadius: "10px",
@@ -13,19 +12,22 @@ export default function ProductCard({ name, price, description, image }) {
         backgroundColor: "#fff",
     };
 
-    const imgStyle = {
-        width: "100%",
-        borderRadius: "8px",
+    const imgStyle = { width: "100%", borderRadius: "8px" };
+    const titleStyle = { fontSize: "1.1rem", margin: "0.5rem 0" };
+    const priceStyle = { fontWeight: "bold", color: "#2b7a0b" };
+
+    const buttonStyle = {
+        backgroundColor: "#2b7a0b",
+        color: "white",
+        border: "none",
+        borderRadius: "5px",
+        padding: "0.5rem 1rem",
+        cursor: "pointer",
+        marginTop: "0.5rem"
     };
 
-    const titleStyle = {
-        fontSize: "1.1rem",
-        margin: "0.5rem 0",
-    };
-
-    const priceStyle = {
-        fontWeight: "bold",
-        color: "#2b7a0b",
+    const handleAdd = () => {
+        onAdd(); // ejecuta la función enviada desde el padre
     };
 
     return (
@@ -34,6 +36,9 @@ export default function ProductCard({ name, price, description, image }) {
             <h3 style={titleStyle}>{name}</h3>
             <p>{description}</p>
             <p style={priceStyle}>${price}</p>
+            <button style={buttonStyle} onClick={handleAdd}>
+                Agregar al carrito
+            </button>
         </div>
     );
 }

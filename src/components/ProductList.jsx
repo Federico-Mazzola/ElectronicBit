@@ -1,8 +1,7 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 
-export default function ProductList() {
-    // 🧮 Datos de ejemplo (mock)
+export default function ProductList({ onAddToCart }) {
     const products = [
         {
             id: 1,
@@ -39,7 +38,11 @@ export default function ProductList() {
             <h2 style={{ textAlign: "center" }}>Nuestros Productos</h2>
             <div style={listStyle}>
                 {products.map((prod) => (
-                    <ProductCard key={prod.id} {...prod} />
+                    <ProductCard
+                        key={prod.id}
+                        {...prod}
+                        onAdd={onAddToCart}
+                    />
                 ))}
             </div>
         </div>
