@@ -1,61 +1,97 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
-export default function ProductCard({ id, name, price, description, image, onAddToCart }) {
+export default function ProductCard({ name, price, description, image, onAddToCart }) {
+    const [count, setCount] = useState(1);
+
+    // 🔹 Estilos
     const cardStyle = {
         border: "1px solid #ddd",
         borderRadius: "10px",
         padding: "1rem",
-        margin: "1rem",
         width: "220px",
+        margin: "15px",
         textAlign: "center",
+        boxShadow: "0 3px 8px rgba(0,0,0,0.1)",
         backgroundColor: "#fff",
-        boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.1)",
+        transition: "transform 0.2s",
     };
 
     const imgStyle = {
         width: "100%",
         borderRadius: "8px",
+        marginBottom: "0.5rem",
     };
 
-    const buttonStyle = {
+    const titleStyle = {
+        fontSize: "1.1rem",
+        margin: "0.5rem 0",
+    };
+
+    const priceStyle = {
+        fontWeight: "bold",
+        color: "#2b7a0b",
+    };
+
+    const btnStyle = {
         backgroundColor: "#007bff",
         color: "#fff",
         border: "none",
-        padding: "0.5rem 1rem",
-        borderRadius: "5px",
+        borderRadius: "6px",
+        padding: "0.5rem 0.8rem",
         cursor: "pointer",
         marginTop: "0.5rem",
     };
 
-    const linkStyle = {
-        display: "inline-block",
+    const counterContainer = {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "10px",
         marginTop: "0.5rem",
-        color: "#007bff",
-        textDecoration: "none",
+    };
+
+    const counterButton = {
+        backgroundColor: "#007bff",
+        color: "#fff",
+        border: "none",
+        borderRadius: "5px",
+        width: "30px",
+        height: "30px",
+        cursor: "pointer",
+        fontSize: "1.2rem",
+    };
+
+    const counterText = {
         fontWeight: "bold",
+        fontSize: "1.1rem",
+    };
+
+    const handleIncrease = () => setCount(count + 1);
+    const handleDecrease = () => {
+        if (count > 1) setCount(count - 1);
+    };
+
+    const handleAdd = () => {
+        onAddToCart({ name, price, description, image, quantity: count });
+        setCount(1);
     };
 
     return (
         <div style={cardStyle}>
             <img src={image} alt={name} style={imgStyle} />
-            <h3>{name}</h3>
+            <h3 style={titleStyle}>{name}</h3>
             <p>{description}</p>
-            <p><strong>${price}</strong></p>
+            <p style={priceStyle}>${price}</p>
 
-            {/* Botón para agregar al carrito */}
-            <button
-                style={buttonStyle}
-                onClick={() => onAddToCart({ id, name, price, quantity: 1 })}
-            >
+            <div style={counterContainer}>
+                <button onClick={handleDecrease} style={counterButton}>−</button>
+                <span style={counterText}>{count}</span>
+                <button onClick={handleIncrease} style={counterButton}>+</button>
+            </div>
+
+            <button style={btnStyle} onClick={handleAdd}>
                 Agregar al carrito
             </button>
-
-            {/* Enlace al detalle del producto */}
-            <br />
-            <Link to={`/product/${id}`} style={linkStyle}>
-                Ver detalle
-            </Link>
         </div>
     );
 }
