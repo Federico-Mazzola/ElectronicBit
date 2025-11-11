@@ -1,51 +1,44 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route, Link } from "react-router-dom";
 import ProductList from "./components/ProductList";
 import Cart from "./components/Cart";
+import ItemDetail from "./components/ItemDetail";
 
 export default function App() {
   const [cartItems, setCartItems] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
 
-  // 🧩 1. Cargar carrito desde localStorage al iniciar
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
-    }
+    if (savedCart) setCartItems(JSON.parse(savedCart));
   }, []);
 
-  // 💾 2. Guardar carrito cada vez que cambie
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // ➕ Agregar producto (manteniendo cantidades)
   const handleAddToCart = (product) => {
-  setCartItems((prev) => {
-    const existing = prev.find((item) => item.name === product.name);
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.name === product.name);
+      if (existing) {
+        return prev.map((item) =>
+          item.name === product.name
+            ? { ...item, quantity: item.quantity + product.quantity }
+            : item
+        );
+      } else {
+        return [...prev, product];
+      }
+    });
 
-    if (existing) {
-      // Si ya existe, sumamos la cantidad
-      return prev.map((item) =>
-        item.name === product.name
-          ? { ...item, quantity: item.quantity + product.quantity }
-          : item
-      );
-    } else {
-      return [...prev, product];
-    }
-  });
+    setSuccessMessage(`${product.name} agregado al carrito ✅`);
+    setTimeout(() => setSuccessMessage(""), 2000);
+  };
 
-  setSuccessMessage(`${product.name} agregado al carrito ✅`);
-  setTimeout(() => setSuccessMessage(""), 2000);
-};
-
-  // ❌ Eliminar producto
   const handleRemoveFromCart = (id) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // 🎨 Estilos
   const appStyle = {
     fontFamily: "Arial, sans-serif",
     backgroundColor: "#f9f9f9",
@@ -64,6 +57,17 @@ export default function App() {
     marginBottom: "1rem",
   };
 
+  const navStyle = {
+    display: "flex",
+    gap: "15px",
+  };
+
+  const linkStyle = {
+    color: "#fff",
+    textDecoration: "none",
+    fontWeight: "bold",
+  };
+
   const successStyle = {
     maxWidth: "600px",
     margin: "0.75rem auto",
@@ -79,13 +83,19 @@ export default function App() {
     <div style={appStyle}>
       <header style={headerStyle}>
         <h1>ElectronicBit</h1>
-        <p>🛒 Carrito: {cartItems.reduce((acc, i) => acc + i.quantity, 0)}</p>
+        <nav style={navStyle}>
+          <Link to="/" style={linkStyle}>Inicio</Link>
+          <Link to="/cart" style={linkStyle}>Carrito 🛒 ({cartItems.reduce((acc, i) => acc + i.quantity, 0)})</Link>
+        </nav>
       </header>
 
       {successMessage && <div style={successStyle}>{successMessage}</div>}
 
-      <ProductList onAddToCart={handleAddToCart} />
-      <Cart items={cartItems} onRemove={handleRemoveFromCart} />
+      <Routes>
+        <Route path="/" element={<ProductList onAddToCart={handleAddToCart} />} />
+        <Route path="/product/:id" element={<ItemDetail onAddToCart={handleAddToCart} />} />
+        <Route path="/cart" element={<Cart items={cartItems} onRemove={handleRemoveFromCart} />} />
+      </Routes>
     </div>
   );
 }
