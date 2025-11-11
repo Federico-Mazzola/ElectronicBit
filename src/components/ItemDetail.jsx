@@ -1,27 +1,12 @@
-import React from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useState } from "react";
 
-export default function ItemDetail({ onAddToCart }) {
-    const { id } = useParams();
-
-    // Simulamos los datos del producto (en un caso real vendrían de una API)
-    const products = [
-        { id: "1", name: "Auriculares Bluetooth", price: 15999, description: "Auriculares inalámbricos premium.", image: "https://via.placeholder.com/300x200?text=Auriculares" },
-        { id: "2", name: "Teclado Mecánico RGB", price: 22999, description: "Teclado gamer con retroiluminación RGB.", image: "https://via.placeholder.com/300x200?text=Teclado" },
-        { id: "3", name: "Mouse Inalámbrico", price: 8999, description: "Mouse ergonómico de alta precisión.", image: "https://via.placeholder.com/300x200?text=Mouse" },
-    ];
-
-    const product = products.find((p) => p.id === id);
-
-    if (!product) {
-        return <p>Producto no encontrado</p>;
-    }
-
-    const handleAdd = () => {
-        onAddToCart({ ...product, quantity: 1 });
-    };
+export default function ItemDetail({ name, description, price, image, onAddToCart }) {
+    const [quantity, setQuantity] = useState(1);
 
     const containerStyle = {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
         textAlign: "center",
         padding: "2rem",
     };
@@ -29,28 +14,64 @@ export default function ItemDetail({ onAddToCart }) {
     const imgStyle = {
         width: "300px",
         borderRadius: "10px",
+        marginBottom: "1rem",
+        boxShadow: "0 0 10px rgba(0,0,0,0.2)",
     };
 
-    const btnStyle = {
+    const buttonContainerStyle = {
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        marginTop: "1rem",
+    };
+
+    const buttonStyle = {
         backgroundColor: "#007bff",
         color: "#fff",
         border: "none",
-        borderRadius: "8px",
-        padding: "0.6rem 1rem",
+        borderRadius: "5px",
+        padding: "0.5rem 1rem",
         cursor: "pointer",
-        margin: "1rem",
+        fontSize: "1rem",
+    };
+
+    const qtyButtonStyle = {
+        ...buttonStyle,
+        backgroundColor: "#ddd",
+        color: "#000",
+        width: "2rem",
+        height: "2rem",
     };
 
     return (
         <div style={containerStyle}>
-            <h2>{product.name}</h2>
-            <img src={product.image} alt={product.name} style={imgStyle} />
-            <p>{product.description}</p>
-            <p><strong>${product.price}</strong></p>
-            <button style={btnStyle} onClick={handleAdd}>Agregar al carrito</button>
-            <Link to="/" style={{ textDecoration: "none" }}>
-                <button style={{ ...btnStyle, backgroundColor: "#555" }}>Volver</button>
-            </Link>
+            <img src={image} alt={name} style={imgStyle} />
+            <h2>{name}</h2>
+            <p>{description}</p>
+            <p><strong>${price}</strong></p>
+
+            {/* Contador simple de cantidad */}
+            <div style={buttonContainerStyle}>
+                <button
+                    style={qtyButtonStyle}
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                >
+                    −
+                </button>
+                <span>{quantity}</span>
+                <button style={qtyButtonStyle} onClick={() => setQuantity((q) => q + 1)}>
+                    +
+                </button>
+            </div>
+
+            {/* Botón para agregar al carrito */}
+            <button
+                style={{ ...buttonStyle, marginTop: "1rem" }}
+                onClick={() => onAddToCart({ name, price, quantity })}
+            >
+                Agregar al carrito
+            </button>
         </div>
     );
 }
+

@@ -1,76 +1,81 @@
 import React from "react";
 
-export default function Cart({ items, onRemove }) {
-    const cartStyle = {
-        backgroundColor: "#fff",
-        padding: "1rem",
-        borderRadius: "10px",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-        maxWidth: "700px",
-        margin: "2rem auto",
+export default function Cart({ cartItems, onClearCart }) {
+    const containerStyle = {
+        padding: "2rem",
+        textAlign: "center",
     };
 
-    const itemStyle = {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        borderBottom: "1px solid #eee",
-        padding: "0.5rem 0",
+    const tableStyle = {
+        width: "80%",
+        margin: "0 auto",
+        borderCollapse: "collapse",
     };
 
-    const btnStyle = {
-        backgroundColor: "#ff4d4f",
-        color: "#fff",
+    const thTdStyle = {
+        border: "1px solid #ddd",
+        padding: "0.75rem",
+    };
+
+    const totalStyle = {
+        marginTop: "1.5rem",
+        fontSize: "1.2rem",
+        fontWeight: "bold",
+    };
+
+    const buttonStyle = {
+        backgroundColor: "#dc3545",
+        color: "white",
         border: "none",
-        borderRadius: "6px",
-        padding: "0.4rem 0.6rem",
+        padding: "0.5rem 1rem",
+        borderRadius: "5px",
         cursor: "pointer",
+        marginTop: "1rem",
     };
 
-    const total = items.reduce(
-        (acc, it) => acc + it.price * it.quantity,
+    const total = cartItems.reduce(
+        (sum, item) => sum + item.price * item.quantity,
         0
     );
 
+    if (cartItems.length === 0) {
+        return (
+            <div style={containerStyle}>
+                <h2>Tu carrito está vacío 🛒</h2>
+            </div>
+        );
+    }
+
     return (
-        <div style={cartStyle}>
-            <h3>🛍️ Tu Carrito</h3>
-            {items.length === 0 ? (
-                <p style={{ textAlign: "center", color: "#888", fontStyle: "italic" }}>
-                    Todavía no agregaste productos
-                </p>
-            ) : (
-                <>
-                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                        {items.map((item) => (
-                            <li key={item.id} style={itemStyle}>
-                                <div>
-                                    <strong>{item.name}</strong> <br />
-                                    <small>{item.description}</small>
-                                </div>
-                                <div style={{ textAlign: "right" }}>
-                                    <p>Cantidad: {item.quantity}</p>
-                                    <p>Precio: ${item.price}</p>
-                                    <p><strong>Subtotal: ${item.price * item.quantity}</strong></p>
-                                    <button style={btnStyle} onClick={() => onRemove(item.id)}>
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                    <div
-                        style={{
-                            marginTop: "1rem",
-                            textAlign: "right",
-                            fontWeight: "bold",
-                            fontSize: "1.1rem",
-                        }}
-                    >
-                        Total: ${total}
-                    </div>
-                </>
-            )}
+        <div style={containerStyle}>
+            <h2>Carrito de compras</h2>
+            <table style={tableStyle}>
+                <thead>
+                    <tr>
+                        <th style={thTdStyle}>Producto</th>
+                        <th style={thTdStyle}>Precio</th>
+                        <th style={thTdStyle}>Cantidad</th>
+                        <th style={thTdStyle}>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {cartItems.map((item) => (
+                        <tr key={item.name}>
+                            <td style={thTdStyle}>{item.name}</td>
+                            <td style={thTdStyle}>${item.price}</td>
+                            <td style={thTdStyle}>{item.quantity}</td>
+                            <td style={thTdStyle}>${item.price * item.quantity}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            <p style={totalStyle}>Total: ${total}</p>
+
+            <button style={buttonStyle} onClick={onClearCart}>
+                Vaciar carrito
+            </button>
         </div>
     );
 }
+

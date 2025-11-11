@@ -1,65 +1,58 @@
 import React, { useEffect, useState } from "react";
 import ItemList from "./ItemList";
 
-// 🧠 Simulamos base de datos local
-const productsData = [
-    {
-        id: 1,
-        name: "Auriculares Bluetooth",
-        price: 15999,
-        description: "Auriculares inalámbricos con micrófono y cancelación de ruido.",
-        category: "audio",
-        image: "https://via.placeholder.com/200x150?text=Auriculares",
-    },
-    {
-        id: 2,
-        name: "Teclado Mecánico RGB",
-        price: 22999,
-        description: "Teclado gamer con retroiluminación y switches azules.",
-        category: "perifericos",
-        image: "https://via.placeholder.com/200x150?text=Teclado",
-    },
-    {
-        id: 3,
-        name: "Mouse Inalámbrico",
-        price: 8999,
-        description: "Mouse ergonómico con sensor óptico y 5 botones programables.",
-        category: "perifericos",
-        image: "https://via.placeholder.com/200x150?text=Mouse",
-    },
-    {
-        id: 4,
-        name: "Parlante Portátil",
-        price: 12999,
-        description: "Parlante Bluetooth resistente al agua con sonido 360°.",
-        category: "audio",
-        image: "https://via.placeholder.com/200x150?text=Parlante",
-    },
-];
-
-// 🔹 Simula llamada a API
-function getProducts() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(productsData);
-        }, 1500);
-    });
-}
-
 export default function ItemListContainer({ onAddToCart }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Llamado simulado a “API”
+    // 🔹 Simulamos un "fetch" con Promise
     useEffect(() => {
-        getProducts().then((data) => {
+        const mockProducts = [
+            {
+                id: 1,
+                name: "Teclado Mecánico RGB",
+                description: "Teclado mecánico retroiluminado ideal para gamers.",
+                price: 75000,
+                image: "https://via.placeholder.com/200x150?text=Teclado",
+            },
+            {
+                id: 2,
+                name: "Mouse Gamer Inalámbrico",
+                description: "Alta precisión y batería de larga duración.",
+                price: 50000,
+                image: "https://via.placeholder.com/200x150?text=Mouse",
+            },
+            {
+                id: 3,
+                name: "Auriculares Inalámbricos",
+                description: "Sonido envolvente y cancelación de ruido.",
+                price: 85000,
+                image: "https://via.placeholder.com/200x150?text=Auriculares",
+            },
+            {
+                id: 4,
+                name: "Parlante Bluetooth",
+                description: "Potente sonido y conexión rápida.",
+                price: 60000,
+                image: "https://via.placeholder.com/200x150?text=Parlante",
+            },
+        ];
+
+        // Promesa simulada (retardo de 1s)
+        const getProducts = new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(mockProducts);
+            }, 1000);
+        });
+
+        getProducts.then((data) => {
             setProducts(data);
             setLoading(false);
         });
     }, []);
 
     if (loading) {
-        return <h3 style={{ textAlign: "center" }}>Cargando productos...</h3>;
+        return <h2 style={{ textAlign: "center" }}>Cargando productos...</h2>;
     }
 
     return <ItemList products={products} onAddToCart={onAddToCart} />;
