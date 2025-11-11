@@ -1,4 +1,3 @@
-// src/components/Cart.jsx
 import React from "react";
 
 export default function Cart({ items, onRemove }) {
@@ -7,7 +6,7 @@ export default function Cart({ items, onRemove }) {
         padding: "1rem",
         borderRadius: "10px",
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-        maxWidth: "600px",
+        maxWidth: "700px",
         margin: "2rem auto",
     };
 
@@ -19,9 +18,6 @@ export default function Cart({ items, onRemove }) {
         padding: "0.5rem 0",
     };
 
-    const nameStyle = { fontWeight: "600" };
-    const priceStyle = { color: "#2b7a0b", fontWeight: "700" };
-
     const btnStyle = {
         backgroundColor: "#ff4d4f",
         color: "#fff",
@@ -31,13 +27,14 @@ export default function Cart({ items, onRemove }) {
         cursor: "pointer",
     };
 
-    // Total: suma de precios
-    const total = items.reduce((acc, it) => acc + Number(it.price), 0);
+    const total = items.reduce(
+        (acc, it) => acc + it.price * it.quantity,
+        0
+    );
 
     return (
         <div style={cartStyle}>
             <h3>🛍️ Tu Carrito</h3>
-
             {items.length === 0 ? (
                 <p style={{ textAlign: "center", color: "#888", fontStyle: "italic" }}>
                     Todavía no agregaste productos
@@ -48,18 +45,28 @@ export default function Cart({ items, onRemove }) {
                         {items.map((item) => (
                             <li key={item.id} style={itemStyle}>
                                 <div>
-                                    <div style={nameStyle}>{item.name}</div>
-                                    <div style={{ fontSize: "0.85rem", color: "#666" }}>{item.description}</div>
+                                    <strong>{item.name}</strong> <br />
+                                    <small>{item.description}</small>
                                 </div>
-                                <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
-                                    <div style={priceStyle}>${item.price}</div>
-                                    <button style={btnStyle} onClick={() => onRemove(item.id)}>Eliminar</button>
+                                <div style={{ textAlign: "right" }}>
+                                    <p>Cantidad: {item.quantity}</p>
+                                    <p>Precio: ${item.price}</p>
+                                    <p><strong>Subtotal: ${item.price * item.quantity}</strong></p>
+                                    <button style={btnStyle} onClick={() => onRemove(item.id)}>
+                                        Eliminar
+                                    </button>
                                 </div>
                             </li>
                         ))}
                     </ul>
-
-                    <div style={{ marginTop: "1rem", textAlign: "right", fontWeight: "700" }}>
+                    <div
+                        style={{
+                            marginTop: "1rem",
+                            textAlign: "right",
+                            fontWeight: "bold",
+                            fontSize: "1.1rem",
+                        }}
+                    >
                         Total: ${total}
                     </div>
                 </>
