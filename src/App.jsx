@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import NavBar from "./components/NavBar";
 import ItemListContainer from "./components/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer";
-import Cart from "./components/Cart"; // si aún no existe, crealo aunque sea vacío
+import Cart from "./components/Cart";
 
 function App() {
   // 🔹 Estados del carrito
@@ -48,7 +48,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
+    <>
       {/* 🔹 Navbar recibe cantidad del carrito */}
       <NavBar cartCount={cartItems.length} />
 
@@ -89,10 +89,12 @@ function App() {
         {/* 404 */}
         <Route
           path="*"
-          element={<h2 style={{ textAlign: "center" }}>Página no encontrada 😢</h2>}
+          element={
+            <h2 style={{ textAlign: "center" }}>Página no encontrada 😢</h2>
+          }
         />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
