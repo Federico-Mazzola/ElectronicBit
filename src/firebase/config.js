@@ -1,27 +1,15 @@
 // src/firebase/config.js
-
 import { initializeApp } from "firebase/app";
-import {
-    getFirestore,
-    initializeFirestore,
-    persistentLocalCache,
-    persistentSingleTabManager
-} from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAaMXzGwHajs8Yuc343zba3JXpkLIXhqWg",
+    apiKey: "TU_API_KEY",
     authDomain: "electronicbit-a4cd9.firebaseapp.com",
     projectId: "electronicbit-a4cd9",
-    storageBucket: "electronicbit-a4cd9.appspot.com", // ← CORREGIDO
+    storageBucket: "electronicbit-a4cd9.firebasestorage.app",
     messagingSenderId: "587269447250",
     appId: "1:587269447250:web:02062c0b2037ec7d87898b"
 };
 
 const app = initializeApp(firebaseConfig);
-
-// Inicializar Firestore compatible con Node
-export const db = initializeFirestore(app, {
-    localCache: persistentLocalCache({
-        tabManager: persistentSingleTabManager()
-    })
-});
+export const db = getFirestore(app);
