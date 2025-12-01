@@ -2,30 +2,27 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./NavBar.css";
 
-export default function NavBar({ cartCount }) {
+export default function NavBar({ cartCount = 0 }) {
     return (
         <nav className="navbar">
-            {/* Logo */}
             <Link to="/" className="navbar-logo">
                 <span className="logo-white">Electronic</span>
                 <span className="logo-blue">Bit</span>
             </Link>
 
-            {/* Categorías */}
             <ul className="navbar-links">
                 <li>
-                    <NavLink to="/category/celulares">Celulares</NavLink>
+                    <NavLink to="/category/celulares" className={({ isActive }) => isActive ? "active" : ""}>Celulares</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/category/notebooks">Notebooks</NavLink>
+                    <NavLink to="/category/notebooks" className={({ isActive }) => isActive ? "active" : ""}>Notebooks</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/category/accesorios">Accesorios</NavLink>
+                    <NavLink to="/category/accesorios" className={({ isActive }) => isActive ? "active" : ""}>Accesorios</NavLink>
                 </li>
             </ul>
 
-            {/* Carrito */}
-            <Link to="/cart" className="navbar-cart">
+            <Link to="/cart" className="navbar-cart" aria-label="Carrito">
                 <img
                     src="https://cdn-icons-png.flaticon.com/512/833/833314.png"
                     alt="Carrito"

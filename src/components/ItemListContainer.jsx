@@ -1,7 +1,6 @@
-// src/components/ItemListContainer.jsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ItemList from "./ItemList";
+import ItemList from "./ItemList/ItemList";
 
 export default function ItemListContainer({ onAddToCart }) {
     const { categoryId } = useParams();
@@ -11,7 +10,7 @@ export default function ItemListContainer({ onAddToCart }) {
     useEffect(() => {
         setLoading(true);
 
-        // Mock de productos (agregué campo "category")
+        // Mock de productos (con campo category)
         const mockProducts = [
             {
                 id: 1,
@@ -71,7 +70,6 @@ export default function ItemListContainer({ onAddToCart }) {
         getProducts.then((data) => {
             let result = data;
 
-            // Si hay categoryId en url, filtramos por categoría (case-insensitive)
             if (categoryId) {
                 result = data.filter(
                     (prod) =>
@@ -85,16 +83,12 @@ export default function ItemListContainer({ onAddToCart }) {
         });
     }, [categoryId]);
 
-    if (loading) {
-        return <h2 style={{ textAlign: "center" }}>Cargando productos...</h2>;
-    }
+    if (loading) return <h2 style={{ textAlign: "center" }}>Cargando productos...</h2>;
 
     if (!products || products.length === 0) {
         return (
             <h2 style={{ textAlign: "center" }}>
-                {categoryId
-                    ? `No hay productos en la categoría "${categoryId}".`
-                    : "No hay productos disponibles."}
+                {categoryId ? `No hay productos en la categoría "${categoryId}".` : "No hay productos disponibles."}
             </h2>
         );
     }

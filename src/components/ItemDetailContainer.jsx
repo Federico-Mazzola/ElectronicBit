@@ -1,14 +1,12 @@
-// src/components/ItemDetailContainer.jsx
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ItemDetail from "./ItemDetail";
+import ItemDetail from "./ItemDetail/ItemDetail";
 
 export default function ItemDetailContainer({ onAddToCart }) {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // 🔹 Simulación de productos con categorías
     const mockProducts = [
         {
             id: 1,
@@ -52,15 +50,11 @@ export default function ItemDetailContainer({ onAddToCart }) {
         },
     ];
 
-    // 🔹 Simulación de fetch con delay
     useEffect(() => {
         setLoading(true);
-
         const getProduct = new Promise((resolve) => {
             setTimeout(() => {
-                const found = mockProducts.find(
-                    (p) => p.id === parseInt(id)
-                );
+                const found = mockProducts.find((p) => p.id === parseInt(id));
                 resolve(found);
             }, 900);
         });
@@ -71,8 +65,8 @@ export default function ItemDetailContainer({ onAddToCart }) {
         });
     }, [id]);
 
-    if (loading) return <h2 className="loading-text">Cargando producto...</h2>;
-    if (!product) return <h2 className="notfound-text">Producto no encontrado 😢</h2>;
+    if (loading) return <h2 style={{ textAlign: "center" }}>Cargando producto...</h2>;
+    if (!product) return <h2 style={{ textAlign: "center" }}>Producto no encontrado 😢</h2>;
 
     return (
         <ItemDetail

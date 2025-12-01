@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBar/NavBar";
 import ItemListContainer from "./components/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import Cart from "./components/Cart";
 
 function App() {
-  // 🔹 Estados del carrito
+  // Estados del carrito
   const [cartItems, setCartItems] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
 
-  // 🔹 Recuperar carrito al cargar
+  // Recuperar carrito desde localStorage
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) setCartItems(JSON.parse(savedCart));
   }, []);
 
-  // 🔹 Guardar carrito cuando cambie
+  // Guardar carrito en localStorage cuando cambia
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // 🔹 Agregar al carrito
+  // Agregar al carrito
   const handleAddToCart = (product) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item.name === product.name);
@@ -41,7 +41,7 @@ function App() {
     setTimeout(() => setSuccessMessage(""), 2000);
   };
 
-  // 🔹 Vaciar carrito
+  // Vaciar carrito
   const handleClearCart = () => {
     setCartItems([]);
     localStorage.removeItem("cart");
@@ -49,10 +49,8 @@ function App() {
 
   return (
     <>
-      {/* 🔹 Navbar recibe cantidad del carrito */}
       <NavBar cartCount={cartItems.length} />
 
-      {/* 🔹 Mensaje de éxito */}
       {successMessage && (
         <p style={{ textAlign: "center", color: "green" }}>
           {successMessage}
@@ -60,38 +58,25 @@ function App() {
       )}
 
       <Routes>
-        {/* Home */}
         <Route
           path="/"
           element={<ItemListContainer onAddToCart={handleAddToCart} />}
         />
-
-        {/* Categorías */}
         <Route
           path="/category/:categoryId"
           element={<ItemListContainer onAddToCart={handleAddToCart} />}
         />
-
-        {/* Detalle */}
         <Route
           path="/item/:id"
           element={<ItemDetailContainer onAddToCart={handleAddToCart} />}
         />
-
-        {/* Carrito */}
         <Route
           path="/cart"
-          element={
-            <Cart cartItems={cartItems} onClearCart={handleClearCart} />
-          }
+          element={<Cart cartItems={cartItems} onClearCart={handleClearCart} />}
         />
-
-        {/* 404 */}
         <Route
           path="*"
-          element={
-            <h2 style={{ textAlign: "center" }}>Página no encontrada 😢</h2>
-          }
+          element={<h2 style={{ textAlign: "center" }}>Página no encontrada 😢</h2>}
         />
       </Routes>
     </>
