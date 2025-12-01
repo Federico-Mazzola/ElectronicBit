@@ -1,5 +1,6 @@
-import { db } from "./config.js";
+import React from "react";
 import { collection, addDoc } from "firebase/firestore";
+import { db } from "./config";
 
 const products = [
     {
@@ -25,16 +26,23 @@ const products = [
     }
 ];
 
-async function seed() {
-    try {
-        for (let product of products) {
-            await addDoc(collection(db, "products"), product);
-            console.log("✔ Producto agregado:", product.name);
+export default function UploadProducts() {
+    const upload = async () => {
+        try {
+            for (let p of products) {
+                await addDoc(collection(db, "products"), p);
+                console.log("Producto agregado:", p.name);
+            }
+            alert("Productos cargados correctamente!");
+        } catch (error) {
+            console.error("Error:", error);
         }
-        console.log("🎉 Todos los productos se cargaron correctamente.");
-    } catch (error) {
-        console.error("❌ Error al cargar productos:", error);
-    }
-}
+    };
 
-seed();
+    return (
+        <div style={{ padding: "2rem" }}>
+            <h1>Cargar productos a Firestore</h1>
+            <button onClick={upload}>Subir productos</button>
+        </div>
+    );
+}
