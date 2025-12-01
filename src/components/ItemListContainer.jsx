@@ -1,12 +1,17 @@
+// src/components/ItemListContainer.jsx
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ItemList from "./ItemList";
 
 export default function ItemListContainer({ onAddToCart }) {
+    const { categoryId } = useParams();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // 🔹 Simulamos un "fetch" con Promise
     useEffect(() => {
+        setLoading(true);
+
+        // Mock de productos (agregué campo "category")
         const mockProducts = [
             {
                 id: 1,
@@ -14,6 +19,7 @@ export default function ItemListContainer({ onAddToCart }) {
                 description: "Teclado mecánico retroiluminado ideal para gamers.",
                 price: 75000,
                 image: "https://via.placeholder.com/200x150?text=Teclado",
+                category: "accesorios",
             },
             {
                 id: 2,
@@ -21,6 +27,7 @@ export default function ItemListContainer({ onAddToCart }) {
                 description: "Alta precisión y batería de larga duración.",
                 price: 50000,
                 image: "https://via.placeholder.com/200x150?text=Mouse",
+                category: "accesorios",
             },
             {
                 id: 3,
@@ -28,6 +35,7 @@ export default function ItemListContainer({ onAddToCart }) {
                 description: "Sonido envolvente y cancelación de ruido.",
                 price: 85000,
                 image: "https://via.placeholder.com/200x150?text=Auriculares",
+                category: "accesorios",
             },
             {
                 id: 4,
@@ -35,24 +43,60 @@ export default function ItemListContainer({ onAddToCart }) {
                 description: "Potente sonido y conexión rápida.",
                 price: 60000,
                 image: "https://via.placeholder.com/200x150?text=Parlante",
+                category: "accesorios",
+            },
+            {
+                id: 5,
+                name: "Celular X Pro",
+                description: "Pantalla AMOLED, 128GB, cámara triple.",
+                price: 250000,
+                image: "https://via.placeholder.com/200x150?text=Celular",
+                category: "celulares",
+            },
+            {
+                id: 6,
+                name: "Notebook Ultra 14\"",
+                description: "Intel i7, 16GB RAM, SSD 512GB.",
+                price: 450000,
+                image: "https://via.placeholder.com/200x150?text=Notebook",
+                category: "notebooks",
             },
         ];
 
-        // Promesa simulada (retardo de 1s)
+        // Simulamos fetch con delay
         const getProducts = new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(mockProducts);
-            }, 1000);
+            setTimeout(() => resolve(mockProducts), 800);
         });
 
         getProducts.then((data) => {
-            setProducts(data);
+            let result = data;
+
+            // Si hay categoryId en url, filtramos por categoría (case-insensitive)
+            if (categoryId) {
+                result = data.filter(
+                    (prod) =>
+                        prod.category &&
+                        prod.category.toString().toLowerCase() === categoryId.toString().toLowerCase()
+                );
+            }
+
+            setProducts(result);
             setLoading(false);
         });
-    }, []);
+    }, [categoryId]);
 
     if (loading) {
         return <h2 style={{ textAlign: "center" }}>Cargando productos...</h2>;
+    }
+
+    if (!products || products.length === 0) {
+        return (
+            <h2 style={{ textAlign: "center" }}>
+                {categoryId
+                    ? `No hay productos en la categoría "${categoryId}".`
+                    : "No hay productos disponibles."}
+            </h2>
+        );
     }
 
     return <ItemList products={products} onAddToCart={onAddToCart} />;

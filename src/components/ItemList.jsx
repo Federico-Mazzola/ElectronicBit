@@ -1,23 +1,13 @@
 import React from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "./ProductCard"; // o Item.jsx si luego lo creamos
+import "./ItemList.css"; // importamos los estilos
 
 export default function ItemList({ products, onAddToCart }) {
-    const listStyle = {
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        padding: "1rem",
-    };
-
-    const titleStyle = {
-        textAlign: "center",
-        marginTop: "1rem",
-    };
-
     return (
-        <div>
-            <h2 style={titleStyle}>Nuestros Productos</h2>
-            <div style={listStyle}>
+        <div className="itemlist-container">
+            <h2 className="itemlist-title">Nuestros Productos</h2>
+
+            <div className="itemlist-grid">
                 {products.map((prod) => (
                     <ProductCard
                         key={prod.id}
@@ -33,4 +23,3 @@ export default function ItemList({ products, onAddToCart }) {
         </div>
     );
 }
-

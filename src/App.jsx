@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavBar from "./components/NavBar/NavBar";
 
+import NavBar from "./components/NavBar";
 import ItemListContainer from "./components/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer";
-import Cart from "./components/Cart";
+import Cart from "./components/Cart"; // si aún no existe, crealo aunque sea vacío
 
-export default function App() {
+function App() {
+  // 🔹 Estados del carrito
   const [cartItems, setCartItems] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
 
-  // 🔹 Recuperar carrito desde localStorage al cargar
+  // 🔹 Recuperar carrito al cargar
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) setCartItems(JSON.parse(savedCart));
   }, []);
 
-  // 🔹 Guardar carrito en localStorage cada vez que cambia
+  // 🔹 Guardar carrito cuando cambie
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // 🔹 Agregar producto al carrito
+  // 🔹 Agregar al carrito
   const handleAddToCart = (product) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item.name === product.name);
@@ -48,17 +49,16 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      {/* 🔹 NavBar separado */}
+      {/* 🔹 Navbar recibe cantidad del carrito */}
       <NavBar cartCount={cartItems.length} />
 
-      {/* 🔹 Mensaje de confirmación */}
+      {/* 🔹 Mensaje de éxito */}
       {successMessage && (
         <p style={{ textAlign: "center", color: "green" }}>
           {successMessage}
         </p>
       )}
 
-      {/* 🔹 Rutas */}
       <Routes>
         {/* Home */}
         <Route
@@ -72,7 +72,7 @@ export default function App() {
           element={<ItemListContainer onAddToCart={handleAddToCart} />}
         />
 
-        {/* Detalle del producto */}
+        {/* Detalle */}
         <Route
           path="/item/:id"
           element={<ItemDetailContainer onAddToCart={handleAddToCart} />}
@@ -81,7 +81,9 @@ export default function App() {
         {/* Carrito */}
         <Route
           path="/cart"
-          element={<Cart cartItems={cartItems} onClearCart={handleClearCart} />}
+          element={
+            <Cart cartItems={cartItems} onClearCart={handleClearCart} />
+          }
         />
 
         {/* 404 */}
@@ -93,3 +95,5 @@ export default function App() {
     </BrowserRouter>
   );
 }
+
+export default App;
