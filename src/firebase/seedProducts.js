@@ -1,10 +1,6 @@
-// src/firebase/seedProducts.js
-
 import { db } from "./config.js";
 import { collection, addDoc } from "firebase/firestore";
 
-// ---- ACA VAN TUS PRODUCTOS ----
-// Usá los que ya tenías en ItemListContainer o mockProducts
 const products = [
     {
         name: "iPhone 14",
@@ -33,11 +29,11 @@ async function seed() {
     try {
         for (let product of products) {
             await addDoc(collection(db, "products"), product);
-            console.log("Producto agregado:", product.name);
+            console.log("✔ Producto agregado:", product.name);
         }
-        console.log("Todos los productos se cargaron correctamente.");
+        console.log("🎉 Todos los productos se cargaron correctamente.");
     } catch (error) {
-        console.error("Error cargando productos:", error);
+        console.error("❌ Error al cargar productos:", error);
     }
 }
 
