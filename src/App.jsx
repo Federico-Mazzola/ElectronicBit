@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./components/NavBar/NavBar";
+
 import ItemListContainer from "./components/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import Cart from "./components/Cart";
@@ -44,80 +46,50 @@ export default function App() {
     localStorage.removeItem("cart");
   };
 
-  // 🔹 Estilos del navbar
-  const navStyle = {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "0.8rem 2rem",
-    backgroundColor: "#111",
-    color: "#fff",
-    borderBottom: "2px solid #222",
-  };
-
-  const logoStyle = {
-    fontSize: "1.6rem",
-    fontWeight: "bold",
-    textDecoration: "none",
-  };
-
-  const cartStyle = {
-    color: "#fff",
-    textDecoration: "none",
-    fontSize: "1.1rem",
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-  };
-
   return (
-    <div style={{ backgroundColor: "#f9f9f9", minHeight: "100vh" }}>
-      <nav style={navStyle}>
-        {/* 🔹 Logo ElectronicBit */}
-        <Link to="/" style={logoStyle}>
-          <span style={{ color: "#fff" }}>Electronic</span>
-          <span style={{ color: "#00bcd4" }}>Bit</span>
-        </Link>
-
-        {/* 🔹 Carrito con ícono y contador */}
-        <Link to="/cart" style={cartStyle}>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/833/833314.png"
-            alt="Carrito"
-            style={{ width: "25px", height: "25px", filter: "invert(100%)" }}
-          />
-          <span style={{ fontSize: "1rem" }}>({cartItems.length})</span>
-        </Link>
-      </nav>
+    <BrowserRouter>
+      {/* 🔹 NavBar separado */}
+      <NavBar cartCount={cartItems.length} />
 
       {/* 🔹 Mensaje de confirmación */}
       {successMessage && (
-        <p style={{ textAlign: "center", color: "green" }}>{successMessage}</p>
+        <p style={{ textAlign: "center", color: "green" }}>
+          {successMessage}
+        </p>
       )}
 
       {/* 🔹 Rutas */}
       <Routes>
+        {/* Home */}
         <Route
           path="/"
           element={<ItemListContainer onAddToCart={handleAddToCart} />}
         />
+
+        {/* Categorías */}
         <Route
-          path="/product/:id"
+          path="/category/:categoryId"
+          element={<ItemListContainer onAddToCart={handleAddToCart} />}
+        />
+
+        {/* Detalle del producto */}
+        <Route
+          path="/item/:id"
           element={<ItemDetailContainer onAddToCart={handleAddToCart} />}
         />
+
+        {/* Carrito */}
         <Route
           path="/cart"
           element={<Cart cartItems={cartItems} onClearCart={handleClearCart} />}
         />
+
+        {/* 404 */}
         <Route
           path="*"
-          element={
-            <h2 style={{ textAlign: "center" }}>Página no encontrada 😢</h2>
-          }
+          element={<h2 style={{ textAlign: "center" }}>Página no encontrada 😢</h2>}
         />
       </Routes>
-    </div>
+    </BrowserRouter>
   );
 }
-
-//final
