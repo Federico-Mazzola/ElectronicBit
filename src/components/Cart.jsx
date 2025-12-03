@@ -5,63 +5,63 @@ export default function Cart() {
     const { cart, removeItem, clearCart, totalPrice } = useCart();
 
     if (cart.length === 0) {
-        return (
-            <div style={{ padding: "1.5rem" }}>
-                <h2>Tu carrito está vacío 😢</h2>
-                <p>Agregá productos desde la tienda.</p>
-            </div>
-        );
+        return <h2 style={{ textAlign: "center" }}>Tu carrito está vacío 🛒</h2>;
     }
 
     return (
-        <div style={{ padding: "1.5rem" }}>
-            <h2>Tu carrito</h2>
+        <div style={{ padding: "20px" }}>
+            <h1>Carrito de compras</h1>
 
-            <ul style={{ listStyle: "none", padding: 0 }}>
-                {cart.map((item, index) => (
-                    <li
-                        key={index}
+            {cart.map((product) => (
+                <div
+                    key={product.id}
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "20px",
+                        borderBottom: "1px solid #ccc",
+                        padding: "10px 0",
+                    }}
+                >
+                    <img
+                        src={product.image}
+                        alt={product.name}
+                        style={{ width: "80px", borderRadius: "6px" }}
+                    />
+
+                    <div style={{ flex: 1 }}>
+                        <h3>{product.name}</h3>
+                        <p>Cantidad: {product.quantity}</p>
+                        <p>Subtotal: ${product.price * product.quantity}</p>
+                    </div>
+
+                    <button
+                        onClick={() => removeItem(product.id)}
                         style={{
-                            padding: "0.8rem",
-                            borderBottom: "1px solid #ddd",
-                            display: "flex",
-                            justifyContent: "space-between",
+                            background: "#e53935",
+                            color: "white",
+                            border: "none",
+                            padding: "8px 14px",
+                            borderRadius: "5px",
+                            cursor: "pointer",
                         }}
                     >
-                        <div>
-                            <strong>{item.name}</strong>
-                            <br />
-                            {item.quantity} × ${item.price}
-                        </div>
+                        Eliminar
+                    </button>
+                </div>
+            ))}
 
-                        <button
-                            onClick={() => removeItem(item.id)}
-                            style={{
-                                background: "#d32f2f",
-                                color: "#fff",
-                                border: "none",
-                                padding: "0.4rem 0.7rem",
-                                borderRadius: "5px",
-                                cursor: "pointer",
-                            }}
-                        >
-                            Eliminar
-                        </button>
-                    </li>
-                ))}
-            </ul>
-
-            <h3>Total: ${totalPrice()}</h3>
+            <h2>Total: ${totalPrice()}</h2>
 
             <button
                 onClick={clearCart}
                 style={{
-                    background: "#555",
-                    color: "#fff",
-                    padding: "0.7rem 1rem",
+                    marginTop: "20px",
+                    background: "#111",
+                    color: "white",
                     border: "none",
+                    padding: "10px 16px",
                     borderRadius: "6px",
-                    marginTop: "1rem",
                     cursor: "pointer",
                 }}
             >

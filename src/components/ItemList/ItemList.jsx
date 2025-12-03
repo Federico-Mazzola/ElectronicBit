@@ -1,23 +1,18 @@
+// src/components/ItemList/ItemList.jsx
 import React from "react";
 import Item from "../Item/Item";
 import "./ItemList.css";
 
-export default function ItemList({ products }) {
+export default function ItemList({ products, onAddToCart }) {
     return (
-        <div className="itemlist-container">
-            <h2 className="itemlist-title">Nuestros Productos</h2>
-
-            <div className="itemlist-grid">
-                {products.map((prod) => (
-                    <Item
-                        key={prod.id}
-                        id={prod.id}
-                        name={prod.name}
-                        price={prod.price}
-                        image={prod.image}
-                    />
-                ))}
-            </div>
+        <div className="item-list-container">
+            {products.map((product) => (
+                <Item
+                    key={product.id}
+                    product={product}
+                    onAddToCart={onAddToCart}
+                />
+            ))}
         </div>
     );
 }

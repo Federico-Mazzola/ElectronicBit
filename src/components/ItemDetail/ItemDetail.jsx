@@ -1,35 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ItemDetail.css";
-import { useCart } from "../../context/CartContext";
 
-export default function ItemDetail({ name, description, price, image }) {
-    const [quantity, setQuantity] = useState(1);
-    const { addItem } = useCart();
-
-    const handleAdd = () => {
-        addItem(
-            { id: crypto.randomUUID(), name, price, image }, // ID real vendrá de Firebase luego
-            quantity
-        );
-    };
+export default function ItemDetail({ product, onAddToCart }) {
+    if (!product) {
+        return <h2 style={{ textAlign: "center" }}>Producto no encontrado 😢</h2>;
+    }
 
     return (
-        <div className="detail-container">
-            <img src={image} alt={name} className="detail-image" />
+        <div className="item-detail-container">
+            <div className="item-detail-card">
+                <img
+                    src={product.image}
+                    alt={product.name}
+                    className="item-detail-image"
+                />
 
-            <h2 className="detail-title">{name}</h2>
-            <p className="detail-description">{description}</p>
-            <p className="detail-price">${price}</p>
+                <div className="item-detail-info">
+                    <h2>{product.name}</h2>
 
-            <div className="detail-quantity">
-                <button onClick={() => setQuantity((q) => Math.max(1, q - 1))}>−</button>
-                <span>{quantity}</span>
-                <button onClick={() => setQuantity((q) => q + 1)}>+</button>
+                    <p className="description">{product.description}</p>
+
+                    <p className="price">${product.price.toLocaleString()}</p>
+
+                    <button
+                        className="add-button"
+                        onClick={() =>
+                            onAddToCart({
+                                id: product.id,
+                                name: product.name,
+                                price: product.price,
+                                quantity: 1,
+                                image: product.image,
+                            })
+                        }
+                    >
+                        Agregar al carrito
+                    </button>
+                </div>
             </div>
-
-            <button className="detail-add-btn" onClick={handleAdd}>
-                Agregar al carrito
-            </button>
         </div>
     );
 }

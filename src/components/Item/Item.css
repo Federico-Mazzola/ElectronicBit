@@ -1,48 +1,47 @@
 .item-card {
-    width: 220px;
-    background: #ffffff;
+    background: #fff;
     border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transition: 0.2s ease;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     text-align: center;
+    transition: transform 0.2s ease;
 }
 
 .item-card:hover {
-    transform: translateY(-4px);
+    transform: scale(1.03);
 }
 
 .item-image {
     width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
+    height: 160px;
+    object-fit: contain;
+    margin-bottom: 10px;
 }
 
-.item-name {
+.item-title {
     font-size: 1.1rem;
-    margin: 0.7rem 0;
-    color: #222;
+    margin: 5px 0;
+    color: #333;
 }
 
 .item-price {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     color: #00bcd4;
-    margin-bottom: 1rem;
+    margin: 6px 0 12px;
 }
 
 .item-detail-btn {
-    padding: 0.5rem 1rem;
-    background: #00bcd4;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 6px;
     display: inline-block;
-    transition: 0.2s;
+    background-color: #00bcd4;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.2s;
 }
 
 .item-detail-btn:hover {
-    background: #0097a7;
+    background-color: #0097a7;
 }

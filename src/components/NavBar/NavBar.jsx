@@ -1,53 +1,48 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useCart } from "../../context/CartContext.jsx";
 import "./NavBar.css";
-import { useCart } from "../../context/CartContext";
 
-export default function NavBar() {
+export default function NavBar({ cartCount: cartCountProp }) {
+    // Si el padre (App) pasa cartCount lo usamos; sino lo sacamos del contexto
     const { totalItems } = useCart();
+    const cartCount = typeof cartCountProp === "number" ? cartCountProp : totalItems();
 
     return (
-        <nav className="navbar">
-            <Link to="/" className="navbar-logo">
-                <span className="logo-white">Electronic</span>
-                <span className="logo-blue">Bit</span>
-            </Link>
+        <header className="navbar">
+            <div className="navbar-left">
+                <Link to="/" className="navbar-logo" aria-label="ElectronicBit - home">
+                    <span className="logo-white">Electronic</span>
+                    <span className="logo-blue">Bit</span>
+                </Link>
 
-            <ul className="navbar-links">
-                <li>
-                    <NavLink
-                        to="/category/celulares"
-                        className={({ isActive }) => (isActive ? "active" : "")}
-                    >
+                <nav className="navbar-nav" aria-label="Main navigation">
+                    <NavLink to="/category/celulares" className={({ isActive }) => (isActive ? "navlink active" : "navlink")}>
                         Celulares
                     </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to="/category/notebooks"
-                        className={({ isActive }) => (isActive ? "active" : "")}
-                    >
+
+                    <NavLink to="/category/notebooks" className={({ isActive }) => (isActive ? "navlink active" : "navlink")}>
                         Notebooks
                     </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to="/category/accesorios"
-                        className={({ isActive }) => (isActive ? "active" : "")}
-                    >
+
+                    <NavLink to="/category/accesorios" className={({ isActive }) => (isActive ? "navlink active" : "navlink")}>
                         Accesorios
                     </NavLink>
-                </li>
-            </ul>
+                </nav>
+            </div>
 
-            <Link to="/cart" className="navbar-cart">
-                <img
-                    src="https://cdn-icons-png.flaticon.com/512/833/833314.png"
-                    alt="Carrito"
-                    className="cart-icon"
-                />
-                <span className="cart-count">{totalItems()}</span>
-            </Link>
-        </nav>
+            <div className="navbar-right">
+                <Link to="/cart" className="cart-button" aria-label="Ir al carrito">
+                    <img
+                        src="https://cdn-icons-png.flaticon.com/512/833/833314.png"
+                        alt="Carrito"
+                        className="cart-icon"
+                        width="24"
+                        height="24"
+                    />
+                    <span className="cart-badge" aria-live="polite">{cartCount()}</span>
+                </Link>
+            </div>
+        </header>
     );
 }

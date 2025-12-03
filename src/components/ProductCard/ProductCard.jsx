@@ -1,32 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./ProductCard.css";
+import { Link } from "react-router-dom";
 
-export default function ProductCard({ id, name, description, price, image, onAddToCart }) {
+export default function ProductCard({ product }) {
     return (
         <div className="product-card">
-            <Link to={`/item/${id}`} className="product-link">
-                <img src={image} alt={name} className="product-image" />
+            <Link to={`/item/${product.id}`}>
+                <img src={product.image} alt={product.name} className="product-img" />
             </Link>
 
             <div className="product-info">
-                <h3 className="product-title">{name}</h3>
+                <h3>{product.name}</h3>
+                <p className="price">${product.price.toLocaleString()}</p>
 
-                <p className="product-description">
-                    {description.length > 60 ? description.substring(0, 60) + "..." : description}
-                </p>
-
-                <p className="product-price"><strong>${price}</strong></p>
-
-                <button
-                    className="product-btn"
-                    onClick={() => onAddToCart({ name, price, quantity: 1 })}
-                >
-                    Agregar al carrito
-                </button>
-
-                <Link to={`/item/${id}`} className="details-btn">
-                    Ver detalles
+                <Link to={`/item/${product.id}`} className="btn-detail">
+                    Ver detalle
                 </Link>
             </div>
         </div>
