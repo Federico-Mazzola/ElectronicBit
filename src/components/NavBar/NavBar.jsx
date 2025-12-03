@@ -1,48 +1,38 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext.jsx";
 import "./NavBar.css";
+import cartIcon from "../../assets/cart-icon.png"; // si tenés un ícono para el carrito
 
-export default function NavBar({ cartCount: cartCountProp }) {
-    // Si el padre (App) pasa cartCount lo usamos; sino lo sacamos del contexto
+export default function NavBar() {
     const { totalItems } = useCart();
-    const cartCount = typeof cartCountProp === "number" ? cartCountProp : totalItems();
 
     return (
-        <header className="navbar">
+        <nav className="navbar">
+            {/* Izquierda: logo + nav */}
             <div className="navbar-left">
-                <Link to="/" className="navbar-logo" aria-label="ElectronicBit - home">
-                    <span className="logo-white">Electronic</span>
-                    <span className="logo-blue">Bit</span>
+                <Link to="/" className="navbar-logo">
+                    <span className="logo-white">Mi</span>
+                    <span className="logo-blue">Tienda</span>
                 </Link>
 
-                <nav className="navbar-nav" aria-label="Main navigation">
-                    <NavLink to="/category/celulares" className={({ isActive }) => (isActive ? "navlink active" : "navlink")}>
-                        Celulares
-                    </NavLink>
-
-                    <NavLink to="/category/notebooks" className={({ isActive }) => (isActive ? "navlink active" : "navlink")}>
-                        Notebooks
-                    </NavLink>
-
-                    <NavLink to="/category/accesorios" className={({ isActive }) => (isActive ? "navlink active" : "navlink")}>
-                        Accesorios
-                    </NavLink>
-                </nav>
+                <div className="navbar-nav">
+                    <Link to="/category/electronica" className="navlink">
+                        Electrónica
+                    </Link>
+                    <Link to="/category/ropa" className="navlink">
+                        Ropa
+                    </Link>
+                </div>
             </div>
 
+            {/* Derecha: carrito */}
             <div className="navbar-right">
-                <Link to="/cart" className="cart-button" aria-label="Ir al carrito">
-                    <img
-                        src="https://cdn-icons-png.flaticon.com/512/833/833314.png"
-                        alt="Carrito"
-                        className="cart-icon"
-                        width="24"
-                        height="24"
-                    />
-                    <span className="cart-badge" aria-live="polite">{cartCount()}</span>
+                <Link to="/cart" className="cart-button">
+                    <img src={cartIcon} alt="Carrito" className="cart-icon" />
+                    <span className="cart-badge">{totalItems()}</span>
                 </Link>
             </div>
-        </header>
+        </nav>
     );
 }
