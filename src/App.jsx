@@ -8,13 +8,12 @@ import Cart from "./components/Cart.jsx";
 import { useCart } from "./context/CartContext.jsx";
 import UploadProducts9 from "./firebase/UploadProducts9.jsx";
 
-
 export default function App() {
   const { totalItems } = useCart();
 
   return (
     <>
-      {/* Agrego un LINK para poder entrar a /upload */}
+      {/* LINK a subir productos */}
       <div style={{ background: "#111", padding: "10px" }}>
         <Link to="/upload" style={{ color: "yellow", marginLeft: "20px" }}>
           SUBIR PRODUCTOS
@@ -28,8 +27,9 @@ export default function App() {
         <Route path="/category/:categoryId" element={<ItemListContainer />} />
         <Route path="/item/:id" element={<ItemDetailContainer />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/upload9" element={<UploadProducts9 />} />
 
+        {/* 🔥 AHORA SÍ COINCIDE */}
+        <Route path="/upload" element={<UploadProducts9 />} />
 
         <Route
           path="*"
