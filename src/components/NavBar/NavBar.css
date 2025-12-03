@@ -1,115 +1,45 @@
-/* NavBar.css */
-
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 1.5rem;
-    background-color: #0e0e10;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    color: #fff;
-    gap: 1rem;
+    padding: 1rem 2rem;
+    background-color: #1a202c;
+    color: white;
+    font-family: 'Arial', sans-serif;
 }
 
-/* izquierda: logo + nav */
-.navbar-left {
+.navbar__logo a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #fbd38d;
+}
+
+.navbar__links {
     display: flex;
-    align-items: center;
     gap: 1.5rem;
+    list-style: none;
 }
 
-/* Logo */
-.navbar-logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
+.navbar__links a {
     text-decoration: none;
-    font-weight: 700;
-    font-size: 1.25rem;
+    color: white;
+    transition: color 0.3s;
 }
 
-.logo-white {
-    color: #ffffff;
+.navbar__links a:hover {
+    color: #fbd38d;
 }
 
-.logo-blue {
-    color: #00bcd4;
-}
-
-/* Navegación */
-.navbar-nav {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
-.navlink {
-    color: #d0d6d9;
+.navbar__cart a {
     text-decoration: none;
-    font-size: 0.98rem;
-    padding: 0.35rem 0.5rem;
-    border-radius: 6px;
-    transition: background-color 0.12s, color 0.12s, transform 0.12s;
+    color: white;
+    font-weight: bold;
 }
 
-.navlink:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.03);
-    transform: translateY(-1px);
-}
-
-.navlink.active {
-    color: #00bcd4;
-    background: rgba(0, 188, 212, 0.06);
-    font-weight: 600;
-}
-
-/* derecha: carrito */
-.navbar-right {
-    display: flex;
-    align-items: center;
-}
-
-.cart-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-    color: #fff;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-.cart-icon {
-    filter: invert(100%);
-    width: 26px;
-    height: 26px;
-}
-
-.cart-badge {
-    background: #00bcd4;
-    color: #071014;
-    font-weight: 700;
-    padding: 0.15rem 0.55rem;
-    border-radius: 999px;
-    font-size: 0.9rem;
-    min-width: 28px;
-    text-align: center;
-}
-
-/* Responsive pequeño */
-@media (max-width: 640px) {
-    .navbar-nav {
-        display: none;
-    }
-
-    .navbar-logo {
-        font-size: 1.1rem;
-    }
-
-    .cart-badge {
-        min-width: 24px;
-        padding: 0.1rem 0.45rem;
-    }
+.cart-count {
+    background-color: #f56565;
+    border-radius: 50%;
+    padding: 0.2rem 0.5rem;
+    margin-left: 0.3rem;
 }
