@@ -5,10 +5,8 @@ import NavBar from "./components/NavBar/NavBar";
 import ItemListContainer from "./components/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import Cart from "./components/Cart";
-
 import { useCart } from "./context/CartContext";
 
-// 👉 Import corregido con la extensión .jsx
 import UploadProducts from "./firebase/UploadProducts.jsx";
 
 export default function App() {
@@ -24,7 +22,7 @@ export default function App() {
         <Route path="/item/:id" element={<ItemDetailContainer />} />
         <Route path="/cart" element={<Cart />} />
 
-        {/* Ruta temporal para cargar productos */}
+        {/* Ruta temporal */}
         <Route path="/upload" element={<UploadProducts />} />
 
         <Route path="*" element={<h2 style={{ textAlign: "center" }}>Página no encontrada 😢</h2>} />
