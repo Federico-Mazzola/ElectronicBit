@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "./config.js";
+;
 
 const products = [
     { name: "iPhone 14", price: 1200, category: "celulares", description: "El último iPhone", image: "https://dummyimage.com/400x300/000/fff.png&text=iPhone+14" },
