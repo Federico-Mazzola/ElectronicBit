@@ -7,8 +7,6 @@ import ItemDetailContainer from "./components/ItemDetailContainer.jsx";
 import Cart from "./components/Cart.jsx";
 import { useCart } from "./context/CartContext.jsx";
 
-import UploadProducts from "./firebase/UploadProducts.jsx";
-
 export default function App() {
   const { totalItems } = useCart();
 
@@ -28,7 +26,6 @@ export default function App() {
         <Route path="/category/:categoryId" element={<ItemListContainer />} />
         <Route path="/item/:id" element={<ItemDetailContainer />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/upload" element={<UploadProducts />} />
 
         <Route
           path="*"
