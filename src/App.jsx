@@ -1,11 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import NavBar from "./components/NavBar/NavBar";
-import ItemListContainer from "./components/ItemListContainer";
-import ItemDetailContainer from "./components/ItemDetailContainer";
-import Cart from "./components/Cart";
-import { useCart } from "./context/CartContext";
+import NavBar from "./components/NavBar/NavBar.jsx";
+import ItemListContainer from "./components/ItemListContainer.jsx";
+import ItemDetailContainer from "./components/ItemDetailContainer.jsx";
+import Cart from "./components/Cart.jsx";
+import { useCart } from "./context/CartContext.jsx";
 
 import UploadProducts from "./firebase/UploadProducts.jsx";
 
