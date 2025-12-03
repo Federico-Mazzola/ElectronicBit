@@ -1,22 +1,22 @@
 // src/components/ItemDetailContainer.jsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ItemDetail from "./ItemDetail/ItemDetail";
+
+import ItemDetail from "./ItemDetail/ItemDetail.jsx";
+
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 
 export default function ItemDetailContainer() {
     const { id } = useParams();
+
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setLoading(true);
+        const productRef = doc(db, "products", id);
 
-        // Referencia al documento en Firestore
-        const docRef = doc(db, "products", id);
-
-        getDoc(docRef)
+        getDoc(productRef)
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     setProduct({
@@ -24,21 +24,19 @@ export default function ItemDetailContainer() {
                         ...snapshot.data(),
                     });
                 } else {
-                    console.warn("Producto no encontrado");
+                    setProduct(null);
                 }
-            })
-            .catch((error) => {
-                console.error("Error obteniendo el producto:", error);
             })
             .finally(() => setLoading(false));
     }, [id]);
 
-    if (loading) return <h2 style={{ textAlign: "center" }}>Cargando producto...</h2>;
+    if (loading)
+        return <h2 style={{ textAlign: "center" }}>Cargando producto...</h2>;
 
     if (!product)
         return (
             <h2 style={{ textAlign: "center" }}>
-                Producto no encontrado 😢
+                El producto no existe o fue eliminado.
             </h2>
         );
 

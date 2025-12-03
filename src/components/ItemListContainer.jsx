@@ -1,24 +1,26 @@
+// src/components/ItemListContainer.jsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ItemList from "./ItemList/ItemList.jsx";
 
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 
-import ItemList from "./ItemList/ItemList";
-
-export default function ItemListContainer({ onAddToCart }) {
+export default function ItemListContainer() {
     const { categoryId } = useParams();
+
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
 
-        const productsRef = collection(db, "products");
+        const itemsRef = collection(db, "products");
 
+        // Si hay categoría → consulta filtrada
         const q = categoryId
-            ? query(productsRef, where("category", "==", categoryId))
-            : productsRef;
+            ? query(itemsRef, where("category", "==", categoryId.toLowerCase()))
+            : itemsRef;
 
         getDocs(q)
             .then((snapshot) => {
@@ -26,21 +28,15 @@ export default function ItemListContainer({ onAddToCart }) {
                     id: doc.id,
                     ...doc.data(),
                 }));
-
                 setProducts(productsData);
             })
-            .catch((error) => {
-                console.error("Error obteniendo productos:", error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+            .finally(() => setLoading(false));
     }, [categoryId]);
 
     if (loading)
         return <h2 style={{ textAlign: "center" }}>Cargando productos...</h2>;
 
-    if (!products || products.length === 0) {
+    if (products.length === 0)
         return (
             <h2 style={{ textAlign: "center" }}>
                 {categoryId
@@ -48,7 +44,6 @@ export default function ItemListContainer({ onAddToCart }) {
                     : "No hay productos disponibles."}
             </h2>
         );
-    }
 
-    return <ItemList products={products} onAddToCart={onAddToCart} />;
+    return <ItemList products={products} />;
 }
