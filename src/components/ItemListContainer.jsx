@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ItemList from "./ItemList/ItemList.jsx"; // <-- ruta corregida
+import ItemList from "./ItemList/ItemList.jsx"; // Ruta correcta
 
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 
 export default function ItemListContainer() {
     const { categoryId } = useParams();
-
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Categorías válidas en tu app
+    const validCategories = ["celulares", "accesorios", "netbooks", "monitor", "tablets"];
 
     useEffect(() => {
         setLoading(true);
 
         const itemsRef = collection(db, "products");
 
-        const q = categoryId
+        // Solo filtramos si categoryId es válido
+        const isValidCategory = categoryId && validCategories.includes(categoryId.toLowerCase());
+
+        const q = isValidCategory
             ? query(itemsRef, where("category", "==", categoryId.toLowerCase()))
             : itemsRef;
 
@@ -24,7 +29,6 @@ export default function ItemListContainer() {
             .then((snapshot) => {
                 const productsData = snapshot.docs.map((doc) => {
                     const data = doc.data();
-
                     return {
                         id: doc.id,
                         name: data.name || "Producto sin nombre",
@@ -37,7 +41,14 @@ export default function ItemListContainer() {
                     };
                 });
 
-                setProducts(productsData);
+                // Filtrar solo categorías válidas aunque venga todo el collection
+                const filteredProducts = isValidCategory
+                    ? productsData.filter((p) =>
+                        validCategories.includes(p.category.toLowerCase())
+                    )
+                    : productsData;
+
+                setProducts(filteredProducts);
             })
             .finally(() => setLoading(false));
     }, [categoryId]);
@@ -48,8 +59,8 @@ export default function ItemListContainer() {
     if (products.length === 0)
         return (
             <h2 style={{ textAlign: "center" }}>
-                {categoryId
-                    ? `No hay productos en la categoría "${categoryId}".`
+                {categoryId && !validCategories.includes(categoryId.toLowerCase())
+                    ? `Categoría "${categoryId}" no encontrada.`
                     : "No hay productos disponibles."}
             </h2>
         );
