@@ -1,8 +1,20 @@
 import React from "react";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../context/CartContext.jsx";
 
 export default function Cart() {
-    const { cart, removeItem, clearCart, totalPrice } = useCart();
+    const {
+        cart,
+        removeFromCart,
+        clearCart,
+        increaseQuantity,
+        decreaseQuantity,
+        totalPrice,
+    } = useCart();
+
+    const handleBuy = () => {
+        alert("¡Su pedido va en camino! 🚚");
+        clearCart(); // opcional: vaciar carrito tras comprar
+    };
 
     if (cart.length === 0) {
         return <h2 style={{ textAlign: "center" }}>Tu carrito está vacío 🛒</h2>;
@@ -31,12 +43,33 @@ export default function Cart() {
 
                     <div style={{ flex: 1 }}>
                         <h3>{product.name}</h3>
-                        <p>Cantidad: {product.quantity}</p>
                         <p>Subtotal: ${product.price * product.quantity}</p>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                            <button
+                                onClick={() => decreaseQuantity(product.id)}
+                                style={{
+                                    padding: "4px 10px",
+                                    cursor: "pointer",
+                                }}
+                            >
+                                -
+                            </button>
+                            <span>{product.quantity}</span>
+                            <button
+                                onClick={() => increaseQuantity(product.id)}
+                                style={{
+                                    padding: "4px 10px",
+                                    cursor: "pointer",
+                                }}
+                            >
+                                +
+                            </button>
+                        </div>
                     </div>
 
                     <button
-                        onClick={() => removeItem(product.id)}
+                        onClick={() => removeFromCart(product.id)}
                         style={{
                             background: "#e53935",
                             color: "white",
@@ -53,20 +86,35 @@ export default function Cart() {
 
             <h2>Total: ${totalPrice()}</h2>
 
-            <button
-                onClick={clearCart}
-                style={{
-                    marginTop: "20px",
-                    background: "#111",
-                    color: "white",
-                    border: "none",
-                    padding: "10px 16px",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                }}
-            >
-                Vaciar carrito
-            </button>
+            <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+                <button
+                    onClick={clearCart}
+                    style={{
+                        background: "#111",
+                        color: "white",
+                        border: "none",
+                        padding: "10px 16px",
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                    }}
+                >
+                    Vaciar carrito
+                </button>
+
+                <button
+                    onClick={handleBuy}
+                    style={{
+                        background: "#00bcd4",
+                        color: "white",
+                        border: "none",
+                        padding: "10px 16px",
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                    }}
+                >
+                    Comprar
+                </button>
+            </div>
         </div>
     );
 }
