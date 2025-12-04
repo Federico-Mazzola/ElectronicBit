@@ -1,74 +1,74 @@
 export const productsData = [
     {
         id: "prod1",
-        name: "Teclado Mecánico RGB",
-        price: 75000,
+        name: "Teclado Redragon Eisa Max K686sp-rgb-max Gris Inalambrico",
+        price: 104000,
         category: "accesorios",
         description: "Teclado mecánico retroiluminado ideal para gaming.",
         image: "https://i.imgur.com/qUSfD4J.png"
     },
     {
         id: "prod2",
-        name: "Mouse Gamer Inalámbrico",
-        price: 50000,
+        name: "Logitech G705 Aurora Mouse Gamer Inalámbrico",
+        price: 197000,
         category: "accesorios",
         description: "Alta precisión, sensor óptico y RGB.",
         image: "https://i.imgur.com/l0EzC9E.png"
     },
     {
         id: "prod3",
-        name: "Auriculares Inalámbricos Pro",
-        price: 85000,
+        name: "Auriculares Headset Inalambricos Sony Pulse 3d Ps5 Gris Prm Grey Camo",
+        price: 600000,
         category: "accesorios",
         description: "Sonido envolvente y cancelación activa de ruido.",
         image: "https://i.imgur.com/twP5g6d.png"
     },
     {
         id: "prod4",
-        name: "Parlante Bluetooth Portátil",
-        price: 60000,
+        name: "Parlante Jbl Flip 7 Negro",
+        price: 220000,
         category: "accesorios",
         description: "Alta potencia y batería de larga duración.",
         image: "https://i.imgur.com/3zwsr0Y.png"
     },
     {
         id: "prod5",
-        name: "Celular X Pro 128GB",
-        price: 250000,
+        name: "Google Pixel 10 128 GB negro 16 GB RAM",
+        price: 1800000,
         category: "celulares",
         description: "Pantalla AMOLED y triple cámara AI.",
         image: "https://i.imgur.com/KYisSgn.png"
     },
     {
         id: "prod6",
-        name: "Notebook Ultra 14” i7",
-        price: 450000,
+        name: "Notebook ASUS Zenbook S 14 Intel® Core™ Ultra 7 Processor 120Hz 32GB 1TB",
+        price: 4500000,
         category: "notebooks",
-        description: "Intel i7, 16GB RAM y SSD 512GB.",
+        description: "Intel core ultra 7, 32GB RAM y SSD 1TB.",
         image: "https://i.imgur.com/tyN3u6r.png"
     },
     {
         id: "prod7",
-        name: "Monitor Gamer 27” 165Hz",
-        price: 220000,
+        name: "Monitor Gamer Gigabyte Gs32q Pantalla De 32 165hz Qhd",
+        price: 649000,
         category: "monitores",
         description: "Panel IPS, 1ms y 165Hz reales.",
         image: "https://i.imgur.com/xQDVI4g.png"
     },
     {
         id: "prod8",
-        name: "Silla Gamer Reclinable",
+        name: "Silla Gamer Con Luces Led Ergonomica Reclinable",
         price: 180000,
-        category: "sillas",
+        category: "accesorios",
         description: "Ergonómica, reclinable y resistente.",
         image: "https://i.imgur.com/9BxSz3q.png"
     },
     {
         id: "prod9",
-        name: "Tablet X 10” Full HD",
-        price: 150000,
+        name: "Tablet X - View Quantum Pro Book 10 Android 11 Color Negro",
+        price: 512000,
         category: "tablets",
-        description: "Pantalla Full HD y batería de larga duración.",
+        description: "Tablet con pantalla Full HD y batería de larga duración.",
         image: "https://i.imgur.com/5vwDzcx.png"
     }
 ];
