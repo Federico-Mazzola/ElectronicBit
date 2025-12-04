@@ -1,3 +1,5 @@
+/* NavBar.css */
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -7,9 +9,11 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     color: #fff;
     gap: 1rem;
+    position: relative;
+    z-index: 1000;
 }
 
-/* izquierda: logo + nav */
+/* izquierda: logo */
 .navbar-left {
     display: flex;
     align-items: center;
@@ -39,6 +43,7 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+    list-style: none;
 }
 
 .navlink {
@@ -80,7 +85,7 @@
 }
 
 .cart-icon {
-    color: #ffffff;
+    font-size: 26px;
 }
 
 .cart-badge {
@@ -94,18 +99,36 @@
     text-align: center;
 }
 
+/* Botón hamburguesa */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
 /* Responsive pequeño */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
     .navbar-nav {
         display: none;
+        flex-direction: column;
+        gap: 10px;
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        background: #0e0e10;
+        padding: 10px 16px;
+        border-radius: 8px;
+        width: 180px;
     }
 
-    .navbar-logo {
-        font-size: 1.1rem;
-    }
-
-    .cart-badge {
-        min-width: 24px;
-        padding: 0.1rem 0.45rem;
+    .navbar-nav.open {
+        display: flex;
     }
 }

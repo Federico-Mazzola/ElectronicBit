@@ -1,46 +1,52 @@
-import React from "react";
+// src/components/NavBar/NavBar.jsx
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useCart } from "../../context/CartContext.jsx";
-import { FaShoppingCart } from "react-icons/fa"; // Icono del carrito
+import { FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
 import "./NavBar.css";
 
 export default function NavBar() {
     const { totalItems } = useCart();
+    const [menuOpen, setMenuOpen] = useState(false);
 
-    // Categorías válidas
-    const categories = ["celulares", "accesorios", "tablets", "notebooks", "monitores"];
+    const toggleMenu = () => setMenuOpen(!menuOpen);
+
+    const categories = ["Celulares", "Notebooks", "Tablets", "Accesorios", "Monitores"];
 
     return (
         <nav className="navbar">
-            {/* IZQUIERDA: Logo + navegación */}
             <div className="navbar-left">
                 <Link to="/" className="navbar-logo">
                     <span className="logo-white">Electronic</span>
                     <span className="logo-blue">Bit</span>
                 </Link>
-
-                <div className="navbar-nav">
-                    {categories.map((cat) => (
-                        <NavLink
-                            key={cat}
-                            to={`/category/${cat}`}
-                            className={({ isActive }) =>
-                                isActive ? "navlink active" : "navlink"
-                            }
-                        >
-                            {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                        </NavLink>
-                    ))}
-                </div>
             </div>
 
-            {/* DERECHA: Carrito */}
+            {/* Botón hamburguesa para móviles */}
+            <button className="hamburger" onClick={toggleMenu}>
+                {menuOpen ? <FaTimes /> : <FaBars />}
+            </button>
+
+            {/* Navegación */}
+            <ul className={`navbar-nav ${menuOpen ? "open" : ""}`}>
+                {categories.map((cat) => (
+                    <li key={cat}>
+                        <NavLink
+                            to={`/category/${cat.toLowerCase()}`}
+                            className={({ isActive }) => (isActive ? "navlink active" : "navlink")}
+                            onClick={() => setMenuOpen(false)} // cierra el menú al hacer clic
+                        >
+                            {cat}
+                        </NavLink>
+                    </li>
+                ))}
+            </ul>
+
+            {/* Carrito */}
             <div className="navbar-right">
                 <Link to="/cart" className="cart-button">
                     <FaShoppingCart className="cart-icon" />
-                    {totalItems() > 0 && (
-                        <span className="cart-badge">{totalItems()}</span>
-                    )}
+                    {totalItems() > 0 && <span className="cart-badge">{totalItems()}</span>}
                 </Link>
             </div>
         </nav>
