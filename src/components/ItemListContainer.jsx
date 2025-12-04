@@ -10,15 +10,15 @@ export default function ItemListContainer() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Categorías válidas en tu app
-    const validCategories = ["celulares", "accesorios", "netbooks", "monitor", "tablets"];
+    // Categorías válidas
+    const validCategories = ["celulares", "accesorios", "tablets", "notebooks", "monitores"];
 
     useEffect(() => {
         setLoading(true);
 
         const itemsRef = collection(db, "products");
 
-        // Solo filtramos si categoryId es válido
+        // Validar si categoryId es válido
         const isValidCategory = categoryId && validCategories.includes(categoryId.toLowerCase());
 
         const q = isValidCategory
@@ -33,15 +33,13 @@ export default function ItemListContainer() {
                         id: doc.id,
                         name: data.name || "Producto sin nombre",
                         price: data.price ?? 0,
-                        image:
-                            data.image ||
-                            "https://via.placeholder.com/260x160?text=Sin+imagen",
+                        image: data.image || "https://via.placeholder.com/260x160?text=Sin+imagen",
                         description: data.description || "No hay descripción disponible",
                         category: data.category || "sin-categoria",
                     };
                 });
 
-                // Filtrar solo categorías válidas aunque venga todo el collection
+                // Filtrar solo categorías válidas si categoryId es válido
                 const filteredProducts = isValidCategory
                     ? productsData.filter((p) =>
                         validCategories.includes(p.category.toLowerCase())
