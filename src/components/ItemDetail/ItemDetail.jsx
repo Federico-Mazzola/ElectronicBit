@@ -1,9 +1,9 @@
 import React from "react";
-import { useCart } from "../context/CartContext.jsx";
+import { useCart } from "../../context/CartContext.jsx"; // ← CORREGIDO
 import "./ItemDetail.css";
 
 export default function ItemDetail({ product }) {
-    const { addToCart } = useCart(); // ✅ Usamos el contexto directamente
+    const { addToCart } = useCart();
 
     if (!product) {
         return <h2 style={{ textAlign: "center" }}>Producto no encontrado 😢</h2>;
@@ -21,7 +21,7 @@ export default function ItemDetail({ product }) {
                 <div className="item-detail-info">
                     <h2>{product.name}</h2>
                     <p className="description">{product.description}</p>
-                    <p className="price">${product.price.toLocaleString("es-AR")}</p>
+                    <p className="price">${product.price?.toLocaleString("es-AR")}</p>
 
                     <button
                         className="add-button"
