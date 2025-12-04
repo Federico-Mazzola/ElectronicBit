@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useCart } from "../../context/CartContext.jsx";
+import { FaShoppingCart } from "react-icons/fa";
 import "./NavBar.css";
-import cartIcon from "../../assets/cart-icon.png"; // si tenés un ícono para el carrito
 
 export default function NavBar() {
     const { totalItems } = useCart();
@@ -17,19 +17,29 @@ export default function NavBar() {
                 </Link>
 
                 <div className="navbar-nav">
-                    <Link to="/category/electronica" className="navlink">
+                    <NavLink
+                        to="/category/electronica"
+                        className={({ isActive }) =>
+                            isActive ? "navlink active" : "navlink"
+                        }
+                    >
                         Electrónica
-                    </Link>
-                    <Link to="/category/ropa" className="navlink">
+                    </NavLink>
+                    <NavLink
+                        to="/category/ropa"
+                        className={({ isActive }) =>
+                            isActive ? "navlink active" : "navlink"
+                        }
+                    >
                         Ropa
-                    </Link>
+                    </NavLink>
                 </div>
             </div>
 
             {/* Derecha: carrito */}
             <div className="navbar-right">
                 <Link to="/cart" className="cart-button">
-                    <img src={cartIcon} alt="Carrito" className="cart-icon" />
+                    <FaShoppingCart className="cart-icon" size={26} />
                     <span className="cart-badge">{totalItems()}</span>
                 </Link>
             </div>
