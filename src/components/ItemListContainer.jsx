@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ItemList from "./ItemList/ItemList.jsx"; // Ruta correcta
+import ItemList from "./ItemList/ItemList.jsx";
 
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase/config.js";
+import { useCart } from "../context/CartContext.jsx";
 
 export default function ItemListContainer() {
     const { categoryId } = useParams();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Categorías válidas
+    const { addToCart } = useCart();
+
     const validCategories = ["celulares", "accesorios", "tablets", "notebooks", "monitores"];
 
     useEffect(() => {
         setLoading(true);
 
         const itemsRef = collection(db, "products");
-
-        // Validar si categoryId es válido
         const isValidCategory = categoryId && validCategories.includes(categoryId.toLowerCase());
 
         const q = isValidCategory
@@ -39,14 +39,7 @@ export default function ItemListContainer() {
                     };
                 });
 
-                // Filtrar solo categorías válidas si categoryId es válido
-                const filteredProducts = isValidCategory
-                    ? productsData.filter((p) =>
-                        validCategories.includes(p.category.toLowerCase())
-                    )
-                    : productsData;
-
-                setProducts(filteredProducts);
+                setProducts(productsData);
             })
             .finally(() => setLoading(false));
     }, [categoryId]);
@@ -63,5 +56,5 @@ export default function ItemListContainer() {
             </h2>
         );
 
-    return <ItemList products={products} />;
+    return <ItemList products={products} addToCart={addToCart} />;
 }

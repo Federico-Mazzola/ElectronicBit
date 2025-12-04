@@ -1,30 +1,29 @@
 import React from "react";
-import Item from "../item/Item.jsx"; // Ruta correcta según tu estructura
-import "./ItemList.css";
+import { Link } from "react-router-dom";
+import "./Item.css";
 
-export default function ItemList({ products }) {
-    if (!products || products.length === 0) {
-        return (
-            <h2 style={{ textAlign: "center" }}>
-                No hay productos disponibles.
-            </h2>
-        );
-    }
+export default function Item({ id, name, price, image, addToCart }) {
+    const product = { id, name, price, image };
 
     return (
-        <div className="item-list-container">
-            {products.map((product) =>
-                // Validación mínima: id y name existen
-                product.id && product.name ? (
-                    <Item
-                        key={product.id}
-                        id={product.id}
-                        name={product.name}
-                        price={product.price}
-                        image={product.image}
-                    />
-                ) : null
-            )}
+        <div className="item-card">
+            <img src={image} alt={name} className="item-image" />
+
+            <h3 className="item-title">{name}</h3>
+            <p className="item-price">${price?.toLocaleString("es-AR")}</p>
+
+            <div className="item-actions">
+                <Link to={`/item/${id}`} className="item-detail-btn">
+                    Ver detalle
+                </Link>
+
+                <button
+                    className="item-add-btn"
+                    onClick={() => addToCart(product, 1)}
+                >
+                    Agregar al carrito
+                </button>
+            </div>
         </div>
     );
 }
