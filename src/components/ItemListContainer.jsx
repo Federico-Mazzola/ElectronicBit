@@ -1,7 +1,6 @@
-// src/components/ItemListContainer.jsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ItemList from "./ItemList/ItemList.jsx";
+import ItemList from "./ItemList.jsx";
 
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase/config.js";
@@ -17,17 +16,23 @@ export default function ItemListContainer() {
 
         const itemsRef = collection(db, "products");
 
-        // Si hay categoría → consulta filtrada
         const q = categoryId
             ? query(itemsRef, where("category", "==", categoryId.toLowerCase()))
             : itemsRef;
 
         getDocs(q)
             .then((snapshot) => {
-                const productsData = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
+                const productsData = snapshot.docs.map((doc) => {
+                    const data = doc.data();
+                    return {
+                        id: doc.id,
+                        name: data.name || "Producto sin nombre",
+                        price: data.price ?? 0,
+                        image: data.image || "https://via.placeholder.com/260x160?text=Sin+imagen",
+                        description: data.description || "No hay descripción disponible",
+                        category: data.category || "sin-categoria",
+                    };
+                });
                 setProducts(productsData);
             })
             .finally(() => setLoading(false));
