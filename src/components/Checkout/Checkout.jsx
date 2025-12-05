@@ -2,11 +2,11 @@
 import { useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase/config";
-import { useCartContext } from "../../context/CartContext";
+import { useCart } from "../../context/CartContext.jsx";
 import "./Checkout.css";
 
 const Checkout = () => {
-    const { cart, totalPrice, clearCart } = useCartContext();
+    const { cart, totalPrice, clearCart } = useCart();
 
     const [buyer, setBuyer] = useState({
         name: "",
