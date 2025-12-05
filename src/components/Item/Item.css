@@ -1,9 +1,17 @@
+/* ─────────── CARD UNIFORME ─────────── */
 .item-card {
     background: #fff;
     border-radius: 12px;
     padding: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     text-align: center;
+
+    /*todas las tarjetas del mismo tamaño */
+    height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -12,20 +20,28 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* ─────────── IMAGENES UNIFORMES ─────────── */
 .item-image {
     width: 100%;
-    height: 180px;
-    object-fit: cover;
+    height: 180px;       
+    object-fit: contain; 
     border-radius: 10px;
     margin-bottom: 10px;
 }
 
+/* ─────────── TITULOS CON ESPACIO CONTROLADO ─────────── */
 .item-title {
     font-size: 1.1rem;
     margin: 5px 0;
     color: #333;
+
+    
+    height: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+/* ─────────── PRECIO ─────────── */
 .item-price {
     font-size: 1.2rem;
     font-weight: bold;
@@ -33,13 +49,16 @@
     margin: 8px 0 12px;
 }
 
+/* ─────────── BOTONES ALINEADOS ABAJO ─────────── */
 .item-buttons {
     display: flex;
     gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: auto; /* 🔥 Empuja los botones abajo */
 }
 
+/* ─────────── BOTONES ─────────── */
 .add-cart-btn {
     background: #00bcd4;
     color: #fff;

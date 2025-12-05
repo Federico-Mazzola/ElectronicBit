@@ -5,6 +5,7 @@ import "./Item.css";
 
 export default function Item({ id, name, price, image }) {
     const { addToCart } = useCart();
+
     const product = { id, name, price, image };
 
     return (
