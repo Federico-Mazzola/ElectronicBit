@@ -1,5 +1,6 @@
 import React from "react";
 import { useCart } from "../context/CartContext.jsx";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
     const {
@@ -10,11 +11,6 @@ export default function Cart() {
         decreaseQuantity,
         totalPrice,
     } = useCart();
-
-    const handleBuy = () => {
-        alert("¡Su pedido va en camino! 🚚");
-        clearCart(); // opcional: vaciar carrito tras comprar
-    };
 
     if (cart.length === 0) {
         return <h2 style={{ textAlign: "center" }}>Tu carrito está vacío 🛒</h2>;
@@ -46,25 +42,9 @@ export default function Cart() {
                         <p>Subtotal: ${product.price * product.quantity}</p>
 
                         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                            <button
-                                onClick={() => decreaseQuantity(product.id)}
-                                style={{
-                                    padding: "4px 10px",
-                                    cursor: "pointer",
-                                }}
-                            >
-                                -
-                            </button>
+                            <button onClick={() => decreaseQuantity(product.id)} style={{ padding: "4px 10px", cursor: "pointer" }}>-</button>
                             <span>{product.quantity}</span>
-                            <button
-                                onClick={() => increaseQuantity(product.id)}
-                                style={{
-                                    padding: "4px 10px",
-                                    cursor: "pointer",
-                                }}
-                            >
-                                +
-                            </button>
+                            <button onClick={() => increaseQuantity(product.id)} style={{ padding: "4px 10px", cursor: "pointer" }}>+</button>
                         </div>
                     </div>
 
@@ -101,19 +81,20 @@ export default function Cart() {
                     Vaciar carrito
                 </button>
 
-                <button
-                    onClick={handleBuy}
-                    style={{
-                        background: "#00bcd4",
-                        color: "white",
-                        border: "none",
-                        padding: "10px 16px",
-                        borderRadius: "6px",
-                        cursor: "pointer",
-                    }}
-                >
-                    Comprar
-                </button>
+                <Link to="/checkout" style={{ textDecoration: "none" }}>
+                    <button
+                        style={{
+                            background: "#00bcd4",
+                            color: "white",
+                            border: "none",
+                            padding: "10px 16px",
+                            borderRadius: "6px",
+                            cursor: "pointer",
+                        }}
+                    >
+                        Finalizar compra
+                    </button>
+                </Link>
             </div>
         </div>
     );
