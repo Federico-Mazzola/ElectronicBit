@@ -6,7 +6,7 @@ import NavBar from "./components/NavBar/NavBar.jsx";
 import ItemListContainer from "./components/ItemListContainer.jsx";
 import ItemDetailContainer from "./components/ItemDetailContainer.jsx";
 import Cart from "./components/Cart.jsx";
-import Checkout from "./components/checkout/CheckOut.jsx";
+import Checkout from "./components/checkout/Checkout.jsx";
 
 export default function App() {
   return (
